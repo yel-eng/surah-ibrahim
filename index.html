@@ -44,13 +44,19 @@ body {
     align-items: center;
     padding: 0 1rem;
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    justify-content: space-between;
+}
+
+.menu-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .menu-logo {
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--gold);
-    margin-left: 1rem;
     white-space: nowrap;
 }
 
@@ -79,6 +85,64 @@ body {
 .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .menu-toggle.active span:nth-child(2) { opacity: 0; }
 .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* Sound Toggle Button */
+.sound-toggle-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+}
+
+.sound-toggle-btn.active {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-color: #2ecc71;
+}
+
+.sound-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Stop Sound Button */
+.stop-sound-btn {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    z-index: 2000;
+    box-shadow: 0 5px 20px rgba(231,76,60,0.5);
+    transition: all 0.3s;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.stop-sound-btn.show {
+    display: flex;
+}
+
+.stop-sound-btn:hover {
+    transform: scale(1.15);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 5px 20px rgba(231,76,60,0.5); }
+    50% { box-shadow: 0 5px 30px rgba(231,76,60,0.9); }
+}
 
 .menu-dropdown {
     position: fixed;
@@ -252,50 +316,37 @@ body {
 .verse-range {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     color: var(--gold-light);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeUp 1s ease 1.2s forwards;
 }
 
-/* ============ ENABLE SOUND BUTTON ============ */
-.enable-sound-btn {
+/* Sound Status Indicator */
+.sound-status {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 15px 30px;
-    background: linear-gradient(135deg, #0d7377, #14a3a8);
-    color: white;
-    border: 2px solid var(--gold);
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 0.9rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 10px 30px rgba(13,115,119,0.5);
-    transition: all 0.3s;
     opacity: 0;
     animation: fadeUp 1s ease 1.3s forwards;
-    font-family: inherit;
 }
 
-.enable-sound-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 15px 40px rgba(13,115,119,0.7);
+.sound-status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e74c3c;
+    transition: all 0.3s;
 }
 
-.enable-sound-btn.enabled {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    border-color: #2ecc71;
-}
-
-.sound-icon {
-    font-size: 1.5rem;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+.sound-status .dot.active {
+    background: #2ecc71;
+    box-shadow: 0 0 10px #2ecc71;
 }
 
 .view-selector {
@@ -983,11 +1034,6 @@ body {
     animation: pulse 1s ease-in-out infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.7); }
-    50% { box-shadow: 0 0 0 15px rgba(212,175,55,0); }
-}
-
 .verse-display-large {
     font-family: 'Amiri', serif;
     font-size: clamp(1.1rem, 3vw, 1.6rem);
@@ -1117,24 +1163,24 @@ body {
     50% { transform: scaleY(1); }
 }
 
-/* Sound Alert */
-.sound-alert {
+/* Sound Notification */
+.sound-notification {
     position: fixed;
     top: 80px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
     color: white;
     padding: 12px 24px;
     border-radius: 30px;
     font-weight: bold;
     z-index: 3000;
     display: none;
-    box-shadow: 0 10px 30px rgba(231,76,60,0.5);
+    box-shadow: 0 10px 30px rgba(46,204,113,0.5);
     animation: slideDown 0.5s ease;
 }
 
-.sound-alert.show {
+.sound-notification.show {
     display: block;
 }
 
@@ -1190,9 +1236,11 @@ body {
         bottom: 35%;
     }
     
-    .enable-sound-btn {
-        padding: 12px 24px;
-        font-size: 1rem;
+    .stop-sound-btn {
+        width: 45px;
+        height: 45px;
+        top: 65px;
+        left: 10px;
     }
 }
 
@@ -1242,11 +1290,6 @@ body {
     .teacher-container {
         bottom: 38%;
     }
-    
-    .enable-sound-btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
 }
 
 @media (max-width: 360px) {
@@ -1293,19 +1336,27 @@ body {
 </head>
 <body>
 
-<!-- Sound Alert -->
-<div class="sound-alert" id="soundAlert">
-    🔊 يرجى تفعيل الصوت أولاً من الزر أعلاه
-</div>
+<!-- Sound Notification -->
+<div class="sound-notification" id="soundNotification"></div>
+
+<!-- Stop Sound Button (Always visible when speaking) -->
+<button class="stop-sound-btn" id="stopSoundBtn" onclick="stopAllSound()" title="إيقاف الصوت">
+    ⏹️
+</button>
 
 <!-- Top Menu -->
 <div class="top-menu">
-    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="menu-right">
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="menu-logo">📖 سورة إبراهيم</div>
+    </div>
+    <button class="sound-toggle-btn" id="soundToggleBtn" onclick="toggleSound()" title="تفعيل/إيقاف الصوت">
+        🔇
     </button>
-    <div class="menu-logo">📖 سورة إبراهيم</div>
 </div>
 
 <div class="menu-dropdown" id="menuDropdown">
@@ -1379,11 +1430,11 @@ body {
         <div class="subtitle">مادة القرآن الكريم وتفسيره</div>
         <div class="verse-range">الآيات من 24 إلى 31</div>
         
-        <!-- Enable Sound Button -->
-        <button class="enable-sound-btn" id="enableSoundBtn" onclick="enableSound()">
-            <span class="sound-icon">🔊</span>
-            <span id="soundBtnText">اضغط لتفعيل الصوت</span>
-        </button>
+        <!-- Sound Status -->
+        <div class="sound-status">
+            <span class="dot" id="soundDot"></span>
+            <span id="soundStatusText">الصوت غير مفعّل (اضغط 🔇 لتفعيله)</span>
+        </div>
         
         <div class="view-selector">
             <div class="view-card disabled">
@@ -1638,51 +1689,109 @@ let teacherVoice = null;
 let studentVoice = null;
 let isSpeaking = false;
 let soundEnabled = false;
+let currentSpeakCallback = null;
+let speakTimeout = null;
 
-// ============ ENABLE SOUND FUNCTION ============
-function enableSound() {
-    const btn = document.getElementById('enableSoundBtn');
-    const btnText = document.getElementById('soundBtnText');
+// ============ SOUND TOGGLE ============
+function toggleSound() {
+    const btn = document.getElementById('soundToggleBtn');
+    const dot = document.getElementById('soundDot');
+    const statusText = document.getElementById('soundStatusText');
     
-    // Test speech synthesis
-    if ('speechSynthesis' in window) {
-        const testUtter = new SpeechSynthesisUtterance('تم تفعيل الصوت بنجاح');
-        testUtter.lang = 'ar-SA';
-        testUtter.volume = 1;
-        
-        // Find Arabic voice
-        const voices = speechSynthesis.getVoices();
-        const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
-        if (arabicVoice) testUtter.voice = arabicVoice;
-        
-        testUtter.onend = () => {
-            soundEnabled = true;
-            btn.classList.add('enabled');
-            btnText.textContent = '✅ تم تفعيل الصوت';
-            loadVoices();
-        };
-        
-        testUtter.onerror = () => {
-            showSoundAlert('⚠️ لم يتم تفعيل الصوت. جربي متصفح Chrome');
-        };
-        
-        speechSynthesis.speak(testUtter);
+    if (!soundEnabled) {
+        // Try to enable sound
+        if ('speechSynthesis' in window) {
+            const testUtter = new SpeechSynthesisUtterance('تم');
+            testUtter.lang = 'ar-SA';
+            testUtter.volume = 0.1;
+            
+            const voices = speechSynthesis.getVoices();
+            const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
+            if (arabicVoice) testUtter.voice = arabicVoice;
+            
+            testUtter.onend = () => {
+                soundEnabled = true;
+                btn.textContent = '🔊';
+                btn.classList.add('active');
+                dot.classList.add('active');
+                statusText.textContent = 'الصوت مفعّل ✅';
+                showNotification('✅ تم تفعيل الصوت');
+                loadVoices();
+            };
+            
+            testUtter.onerror = () => {
+                showNotification('⚠️ لم يتم تفعيل الصوت');
+            };
+            
+            speechSynthesis.speak(testUtter);
+        } else {
+            showNotification('⚠️ متصفحك لا يدعم الصوت');
+        }
     } else {
-        showSoundAlert('⚠️ متصفحك لا يدعم الصوت. جربي Chrome');
+        // Disable sound
+        soundEnabled = false;
+        btn.textContent = '🔇';
+        btn.classList.remove('active');
+        dot.classList.remove('active');
+        statusText.textContent = 'الصوت غير مفعّل (اضغط 🔇 لتفعيله)';
+        showNotification('🔇 تم إيقاف الصوت');
+        stopAllSound();
     }
 }
 
-function showSoundAlert(message) {
-    const alert = document.getElementById('soundAlert');
-    alert.textContent = message;
-    alert.classList.add('show');
-    setTimeout(() => alert.classList.remove('show'), 3000);
+function showNotification(message) {
+    const notif = document.getElementById('soundNotification');
+    notif.textContent = message;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 2500);
+}
+
+// ============ STOP ALL SOUND ============
+function stopAllSound() {
+    // Stop speech synthesis
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+    }
+    
+    // Stop audio
+    stopAudio();
+    
+    // Clear timeouts
+    if (speakTimeout) {
+        clearTimeout(speakTimeout);
+        speakTimeout = null;
+    }
+    
+    // Reset states
+    isSpeaking = false;
+    currentSpeakCallback = null;
+    
+    // Hide stop button
+    document.getElementById('stopSoundBtn').classList.remove('show');
+    
+    // Hide speaker indicator
+    hideSpeakerIndicator();
+    
+    // Remove speaking animations
+    document.getElementById('teacherFigure').classList.remove('teacher-speaking');
+    document.querySelectorAll('.student-question.speaking').forEach(el => {
+        el.classList.remove('speaking');
+    });
+    
+    showNotification('⏹️ تم إيقاف الصوت');
 }
 
 // ============ INITIALIZATION ============
 function init() {
     createParticles();
     loadVoices();
+    
+    // Allow sound toggle on first interaction
+    document.addEventListener('click', () => {
+        if ('speechSynthesis' in window && speechSynthesis.getVoices().length === 0) {
+            speechSynthesis.getVoices();
+        }
+    }, { once: true });
 }
 
 function createParticles() {
@@ -1725,36 +1834,53 @@ function loadVoices() {
     
     if (!teacherVoice) teacherVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
     if (!studentVoice) studentVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
-    
-    console.log('Teacher voice:', teacherVoice?.name, teacherVoice?.lang);
-    console.log('Student voice:', studentVoice?.name, studentVoice?.lang);
 }
 
 if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = loadVoices;
 }
 
+// ============ SPEAK FUNCTION (Non-blocking) ============
 function speak(text, isTeacher = true, callback) {
+    // Always call callback after a delay if sound is not enabled
     if (!soundEnabled) {
-        showSoundAlert('🔊 يرجى تفعيل الصوت أولاً');
-        if (callback) setTimeout(callback, 100);
+        if (callback) {
+            speakTimeout = setTimeout(callback, 1500);
+        }
         return;
     }
     
     if (!('speechSynthesis' in window)) {
-        if (callback) setTimeout(callback, 100);
+        if (callback) {
+            speakTimeout = setTimeout(callback, 1500);
+        }
         return;
     }
     
+    // Cancel any ongoing speech
     speechSynthesis.cancel();
+    if (speakTimeout) {
+        clearTimeout(speakTimeout);
+    }
+    
+    // Store callback
+    currentSpeakCallback = callback;
+    
+    // Show stop button
+    document.getElementById('stopSoundBtn').classList.add('show');
     
     const sentences = text.split(/(?<=[.!?،۔])\s+/);
     let currentIndex = 0;
+    let cancelled = false;
     
     function speakNext() {
+        if (cancelled) return;
+        
         if (currentIndex >= sentences.length) {
             hideSpeakerIndicator();
             isSpeaking = false;
+            document.getElementById('stopSoundBtn').classList.remove('show');
+            currentSpeakCallback = null;
             if (callback) callback();
             return;
         }
@@ -1786,13 +1912,17 @@ function speak(text, isTeacher = true, callback) {
         isSpeaking = true;
         
         utter.onend = () => {
+            if (cancelled) return;
             currentIndex++;
-            setTimeout(speakNext, 200);
+            speakTimeout = setTimeout(speakNext, 200);
         };
         
         utter.onerror = () => {
+            cancelled = true;
             hideSpeakerIndicator();
             isSpeaking = false;
+            document.getElementById('stopSoundBtn').classList.remove('show');
+            currentSpeakCallback = null;
             if (callback) callback();
         };
         
@@ -1834,13 +1964,15 @@ function goToSection(sectionId) {
     const index = sections.findIndex(s => s.id === sectionId);
     if (index === -1) return;
     
+    // Stop any ongoing sound first
+    stopAllSound();
+    
     toggleMenu();
     
     const landing = document.getElementById('landing');
     const classroom = document.getElementById('classroom');
     const questionScreen = document.getElementById('questionScreen');
     
-    speechSynthesis.cancel();
     stopAudio();
     
     if (!landing.classList.contains('hidden')) {
@@ -1859,11 +1991,6 @@ function goToSection(sectionId) {
 }
 
 function enterStudentView() {
-    if (!soundEnabled) {
-        showSoundAlert('🔊 يرجى تفعيل الصوت أولاً من الزر أعلاه');
-        return;
-    }
-    
     document.getElementById('landing').classList.add('hidden');
     setTimeout(() => {
         document.getElementById('classroom').classList.add('active');
@@ -1974,7 +2101,8 @@ function showTeacherQuestion(text, callback) {
 }
 
 function selectStudent(index) {
-    if (isSpeaking) return;
+    // Stop any ongoing sound
+    stopAllSound();
     
     currentStudent = index;
     const section = sections[currentSection];
@@ -1999,12 +2127,14 @@ function selectStudent(index) {
 }
 
 function backToClassroom() {
+    stopAllSound();
     document.getElementById('questionScreen').classList.remove('active');
     stopAudio();
-    speechSynthesis.cancel();
 }
 
 function chooseListen() {
+    stopAllSound();
+    
     const section = sections[currentSection];
     document.getElementById('verseDisplay').textContent = section.verse || 'بسم الله الرحمن الرحيم';
     document.getElementById('audioPlayer').classList.add('show');
@@ -2018,6 +2148,8 @@ function chooseListen() {
 }
 
 function chooseExplain() {
+    stopAllSound();
+    
     const student = sections[currentSection].students[currentStudent];
     document.getElementById('answerDisplay').classList.add('show');
     document.getElementById('choiceButtons').style.display = 'none';
@@ -2044,6 +2176,8 @@ function addAskAgainButton() {
 }
 
 function askAgain() {
+    stopAllSound();
+    
     const student = sections[currentSection].students[currentStudent];
     document.getElementById('answerDisplay').classList.remove('show');
     document.getElementById('nextBtn').style.display = 'none';
@@ -2077,7 +2211,7 @@ function toggleAudio() {
             btn.classList.add('playing');
             audioPlaying = true;
         }).catch(e => {
-            alert('تعذر تشغيل الصوت. تأكد من اتصالك بالإنترنت.');
+            showNotification('⚠️ تعذر تشغيل الصوت');
         });
     }
 }
@@ -2106,6 +2240,7 @@ audioEl.addEventListener('ended', () => {
     }, 1000);
 });
 
+// Initialize
 init();
 </script>
 </body>
