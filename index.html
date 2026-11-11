@@ -10,9 +10,11 @@
 :root {
     --gold: #d4af37;
     --gold-light: #f4e5a1;
+    --gold-dark: #b8941f;
     --deep-blue: #0a1628;
     --royal-blue: #1e3a5f;
     --emerald: #0d7377;
+    --emerald-light: #14a3a8;
     --cream: #fdf8ef;
     --warm: #f5e6d3;
     --teacher-color: #2c5f7c;
@@ -35,166 +37,167 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 60px;
-    background: linear-gradient(180deg, rgba(10,22,40,0.98) 0%, rgba(10,22,40,0.95) 100%);
-    backdrop-filter: blur(20px);
-    border-bottom: 2px solid var(--gold);
+    height: 70px;
+    background: linear-gradient(135deg, rgba(10,22,40,0.98) 0%, rgba(30,58,95,0.98) 100%);
+    backdrop-filter: blur(30px) saturate(200%);
+    border-bottom: 2px solid rgba(212,175,55,0.4);
     z-index: 1000;
     display: flex;
     align-items: center;
-    padding: 0 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    padding: 0 1.5rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     justify-content: space-between;
 }
 
-.menu-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.menu-right { display: flex; align-items: center; gap: 15px; }
 
 .menu-logo {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--gold);
+    font-size: 1.4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     white-space: nowrap;
+    letter-spacing: 1px;
 }
 
 .menu-toggle {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    border: none;
-    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(212,175,55,0.15));
+    border: 2px solid rgba(212,175,55,0.5);
+    border-radius: 14px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    transition: all 0.3s;
+    gap: 5px;
+    transition: all 0.4s;
+}
+
+.menu-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.5);
 }
 
 .menu-toggle span {
-    width: 20px;
-    height: 2px;
-    background: var(--deep-blue);
-    transition: all 0.3s;
+    width: 24px;
+    height: 2.5px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transition: all 0.4s;
+    border-radius: 3px;
 }
 
-.menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
 .menu-toggle.active span:nth-child(2) { opacity: 0; }
-.menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+.menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-/* Sound Toggle Button */
 .sound-toggle-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.1);
-    border: 2px solid var(--gold);
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    transition: all 0.3s;
+    font-size: 1.5rem;
+    transition: all 0.4s;
 }
+
+.sound-toggle-btn:hover { transform: scale(1.1); }
 
 .sound-toggle-btn.active {
     background: linear-gradient(135deg, #2ecc71, #27ae60);
     border-color: #2ecc71;
+    box-shadow: 0 8px 25px rgba(46,204,113,0.6);
 }
 
-.sound-toggle-btn:hover {
-    transform: scale(1.1);
-}
-
-/* Stop Sound Button */
 .stop-sound-btn {
     position: fixed;
-    top: 70px;
+    top: 80px;
     left: 20px;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(135deg, #e74c3c, #c0392b);
-    border: 2px solid white;
-    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 18px;
     cursor: pointer;
     display: none;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     z-index: 2000;
-    box-shadow: 0 5px 20px rgba(231,76,60,0.5);
-    transition: all 0.3s;
-    animation: pulse 1.5s ease-in-out infinite;
+    box-shadow: 0 12px 45px rgba(231,76,60,0.6);
+    transition: all 0.4s;
 }
 
 .stop-sound-btn.show {
     display: flex;
+    animation: stopBtnAppear 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.stop-sound-btn:hover {
-    transform: scale(1.15);
+@keyframes stopBtnAppear {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 5px 20px rgba(231,76,60,0.5); }
-    50% { box-shadow: 0 5px 30px rgba(231,76,60,0.9); }
-}
+.stop-sound-btn:hover { transform: scale(1.2); }
 
 .menu-dropdown {
     position: fixed;
-    top: 60px;
+    top: 70px;
     left: 0;
     right: 0;
-    background: linear-gradient(180deg, rgba(10,22,40,0.98), rgba(10,22,40,0.95));
-    backdrop-filter: blur(20px);
-    border-bottom: 2px solid var(--gold);
+    background: linear-gradient(180deg, rgba(10,22,40,0.99), rgba(30,58,95,0.99));
+    backdrop-filter: blur(40px);
+    border-bottom: 2px solid rgba(212,175,55,0.4);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease;
+    transition: max-height 0.6s;
     z-index: 999;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.6);
 }
 
-.menu-dropdown.open {
-    max-height: 80vh;
-    overflow-y: auto;
-}
+.menu-dropdown.open { max-height: 80vh; overflow-y: auto; }
 
 .menu-item {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid rgba(212,175,55,0.2);
+    padding: 1.3rem 1.8rem;
+    border-bottom: 1px solid rgba(212,175,55,0.15);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.2rem;
     color: white;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
 }
 
-.menu-item:hover, .menu-item.active {
-    background: rgba(212,175,55,0.15);
-    padding-right: 2rem;
+.menu-item:hover {
+    padding-right: 2.8rem;
+    background: rgba(212,175,55,0.12);
 }
 
 .menu-item-icon {
-    width: 35px;
-    height: 35px;
+    width: 44px;
+    height: 44px;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    border-radius: 50%;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     flex-shrink: 0;
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+    transition: all 0.4s;
 }
 
-.menu-item-text {
-    flex: 1;
-}
+.menu-item:hover .menu-item-icon { transform: scale(1.15) rotate(10deg); }
+
+.menu-item-text { flex: 1; font-weight: 600; }
 
 /* ============ LANDING PAGE ============ */
 .landing {
@@ -210,53 +213,43 @@ body {
     overflow-y: auto;
 }
 
-.landing.hidden {
-    opacity: 0;
-    transform: scale(1.1);
-    pointer-events: none;
-}
+.landing.hidden { opacity: 0; transform: scale(1.1); pointer-events: none; }
 
-.landing-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-}
+.landing-bg { position: absolute; inset: 0; overflow: hidden; }
 
 .landing-bg::before {
     content: '';
     position: absolute;
     inset: 0;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(212,175,55,0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(13,115,119,0.15) 0%, transparent 40%);
-    animation: bgPulse 8s ease-in-out infinite;
+        radial-gradient(circle at 20% 30%, rgba(212,175,55,0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(13,115,119,0.2) 0%, transparent 50%);
+    animation: bgPulse 10s ease-in-out infinite;
 }
 
 @keyframes bgPulse {
-    0%, 100% { opacity: 0.6; }
+    0%, 100% { opacity: 0.7; }
     50% { opacity: 1; }
 }
 
-.landing-particles {
-    position: absolute;
-    inset: 0;
-}
+.landing-particles { position: absolute; inset: 0; }
 
 .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
     background: var(--gold);
     border-radius: 50%;
-    animation: particleFloat 15s infinite linear;
-    opacity: 0.6;
+    animation: particleFloat 18s infinite linear;
+    opacity: 0.7;
+    box-shadow: 0 0 15px var(--gold);
 }
 
 @keyframes particleFloat {
     0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
-    100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(-100px) translateX(150px); opacity: 0; }
 }
 
 .landing-content {
@@ -270,16 +263,16 @@ body {
 
 .lesson-badge {
     display: inline-block;
-    padding: 8px 24px;
+    padding: 12px 32px;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     color: var(--deep-blue);
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    border-radius: 35px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
     animation: fadeUp 1s ease 0.5s forwards;
-    box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+    box-shadow: 0 12px 35px rgba(212,175,55,0.5);
 }
 
 @keyframes fadeUp {
@@ -288,70 +281,82 @@ body {
 }
 
 .main-title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: clamp(3rem, 9vw, 6rem);
     font-weight: 900;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
     opacity: 0;
     animation: titleReveal 1.5s ease 0.7s forwards;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    filter: drop-shadow(0 0 40px rgba(212,175,55,0.5));
 }
 
 @keyframes titleReveal {
-    from { opacity: 0; transform: scale(0.8); filter: blur(10px); }
-    to { opacity: 1; transform: scale(1); filter: blur(0); }
+    from { opacity: 0; transform: scale(0.8); filter: blur(15px); }
+    to { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 40px rgba(212,175,55,0.5)); }
 }
 
 .subtitle {
-    font-size: clamp(1rem, 3vw, 1.5rem);
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 0.3rem;
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+    color: rgba(255,255,255,0.95);
+    margin-bottom: 0.5rem;
     opacity: 0;
     animation: fadeUp 1s ease 1s forwards;
+    font-weight: 600;
 }
 
 .verse-range {
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    font-size: clamp(1rem, 2.8vw, 1.3rem);
     color: var(--gold-light);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
     opacity: 0;
     animation: fadeUp 1s ease 1.2s forwards;
+    font-weight: 700;
 }
 
-/* Sound Status Indicator */
 .sound-status {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 20px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 20px;
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    gap: 14px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 35px;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
     opacity: 0;
     animation: fadeUp 1s ease 1.3s forwards;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    font-weight: 600;
 }
 
 .sound-status .dot {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: #e74c3c;
-    transition: all 0.3s;
+    transition: all 0.4s;
+    box-shadow: 0 0 15px rgba(231,76,60,0.7);
 }
 
 .sound-status .dot.active {
     background: #2ecc71;
-    box-shadow: 0 0 10px #2ecc71;
+    box-shadow: 0 0 20px rgba(46,204,113,1);
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(46,204,113,0.7); }
+    50% { box-shadow: 0 0 30px rgba(46,204,113,1); }
 }
 
 .view-selector {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
     opacity: 0;
@@ -359,39 +364,25 @@ body {
 }
 
 .view-card {
-    width: 260px;
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(212,175,55,0.3);
-    border-radius: 20px;
+    width: 300px;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+    backdrop-filter: blur(25px);
+    border: 2px solid rgba(212,175,55,0.35);
+    border-radius: 28px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s;
     position: relative;
     overflow: hidden;
 }
 
-.view-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.4s;
-}
-
-.view-card:hover:not(.disabled)::before { opacity: 1; }
-
 .view-card:hover:not(.disabled) {
-    transform: translateY(-8px);
+    transform: translateY(-15px) scale(1.03);
     border-color: var(--gold);
-    box-shadow: 0 20px 60px rgba(212,175,55,0.3);
+    box-shadow: 0 30px 70px rgba(212,175,55,0.4);
 }
 
-.view-card.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
+.view-card.disabled { opacity: 0.4; cursor: not-allowed; }
 
 .view-card.disabled::after {
     content: 'قريباً';
@@ -399,125 +390,338 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.95);
     color: var(--gold);
-    padding: 8px 25px;
-    border-radius: 30px;
+    padding: 12px 35px;
+    border-radius: 35px;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     border: 2px solid var(--gold);
 }
 
 .view-icon {
-    font-size: 3rem;
-    margin-bottom: 0.8rem;
+    font-size: 4rem;
+    margin-bottom: 1.2rem;
     display: block;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .view-title {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 800;
     color: var(--gold-light);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.6rem;
 }
 
 .view-desc {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+    font-weight: 500;
 }
 
-/* ============ CLASSROOM SCENE ============ */
+/* ============ INNOVATIVE CLASSROOM ============ */
 .classroom {
     position: fixed;
     inset: 0;
-    top: 60px;
-    background: linear-gradient(180deg, #3d2817 0%, #2a1810 50%, #1a0f08 100%);
+    top: 70px;
     display: none;
     opacity: 0;
-    transition: opacity 0.8s;
+    transition: opacity 1s;
+    overflow: hidden;
+    background: linear-gradient(180deg, #2d1f14 0%, #1a1209 100%);
+}
+
+.classroom.active { display: block; opacity: 1; }
+
+/* Classroom Scene with 3D Perspective */
+.classroom-scene {
+    position: absolute;
+    inset: 0;
+    perspective: 1200px;
     overflow: hidden;
 }
 
-.classroom.active {
-    display: block;
-    opacity: 1;
-}
-
-.classroom-bg {
+/* Back Wall */
+.classroom-wall {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(61,40,23,0.95) 0%, rgba(42,24,16,0.98) 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 65%;
+    background: linear-gradient(180deg, #f5e6d3 0%, #e8d4b8 50%, #d4b896 100%);
+    transform-origin: top;
 }
 
-.classroom-floor {
+/* Wall Pattern - Islamic Geometric */
+.wall-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 0.08;
+    background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(139,69,19,0.3) 35px, rgba(139,69,19,0.3) 37px),
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(139,69,19,0.3) 35px, rgba(139,69,19,0.3) 37px);
+}
+
+/* Floor with Perspective */
+.classroom-floor-new {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 30%;
-    background: repeating-linear-gradient(
-        90deg,
-        #5d3a1a 0px,
-        #5d3a1a 80px,
-        #4a2e14 80px,
-        #4a2e14 82px
-    );
-    opacity: 0.3;
+    height: 40%;
+    background: 
+        linear-gradient(180deg, #8b6f47 0%, #6b4423 50%, #4a2e14 100%);
+    transform-origin: top;
+    box-shadow: inset 0 20px 40px rgba(0,0,0,0.3);
 }
 
-.blackboard {
+.floor-tiles {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(0,0,0,0.15) 80px, rgba(0,0,0,0.15) 82px),
+        repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(0,0,0,0.1) 80px, rgba(0,0,0,0.1) 82px);
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: top;
+}
+
+/* Ceiling Light */
+.ceiling-light {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 80px;
+    z-index: 5;
+}
+
+.light-fixture {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 15px;
+    background: linear-gradient(180deg, #4a3520, #2d1f14);
+    border-radius: 0 0 10px 10px;
+}
+
+.light-bulb {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 40px;
+    background: radial-gradient(ellipse, #fff9e6 0%, #ffd700 50%, #d4af37 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 120px rgba(255,215,0,0.4);
+    animation: lightGlow 3s ease-in-out infinite;
+}
+
+@keyframes lightGlow {
+    0%, 100% { box-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 120px rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 80px rgba(255,215,0,1), 0 0 150px rgba(255,215,0,0.6); }
+}
+
+.light-beam {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 400px;
+    background: linear-gradient(180deg, rgba(255,215,0,0.15) 0%, transparent 100%);
+    clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+    pointer-events: none;
+}
+
+/* Blackboard - 3D Style */
+.blackboard-new {
     position: absolute;
     top: 8%;
     left: 50%;
     transform: translateX(-50%);
-    width: 85%;
+    width: 75%;
     max-width: 700px;
     height: 32%;
-    background: linear-gradient(180deg, #1a3a2a 0%, #0f2818 100%);
-    border: 12px solid #5d3a1a;
-    border-radius: 8px;
+    z-index: 10;
+}
+
+.blackboard-frame {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #8b6f47 0%, #6b4423 50%, #4a2e14 100%);
+    border-radius: 12px;
     box-shadow: 
-        inset 0 0 40px rgba(0,0,0,0.6),
-        0 15px 40px rgba(0,0,0,0.5);
+        0 20px 50px rgba(0,0,0,0.5),
+        inset 0 2px 0 rgba(255,255,255,0.2),
+        inset 0 -2px 0 rgba(0,0,0,0.3);
+    padding: 15px;
+}
+
+.blackboard-surface {
+    position: absolute;
+    inset: 15px;
+    background: linear-gradient(180deg, #1a3a2a 0%, #0f2818 100%);
+    border-radius: 6px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    overflow: hidden;
 }
 
-.blackboard::before {
+.blackboard-surface::before {
     content: '';
     position: absolute;
-    bottom: -25px;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03) 0%, transparent 50%);
+}
+
+.blackboard-chalk-tray {
+    position: absolute;
+    bottom: -20px;
     left: 10%;
     right: 10%;
-    height: 15px;
-    background: linear-gradient(180deg, #8b6f47, #5d3a1a);
-    border-radius: 3px;
+    height: 20px;
+    background: linear-gradient(180deg, #6b4423, #4a2e14);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
+
+.chalk {
+    position: absolute;
+    bottom: 5px;
+    width: 30px;
+    height: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.chalk.white { background: #f5f5f5; left: 20%; }
+.chalk.yellow { background: #ffd700; left: 35%; }
+.chalk.red { background: #e74c3c; left: 50%; }
 
 .blackboard-content {
     text-align: center;
     color: #f4e5a1;
     font-family: 'Amiri', serif;
+    position: relative;
+    z-index: 2;
+    padding: 1rem;
 }
 
 .blackboard-title {
-    font-size: clamp(1.3rem, 4vw, 2.2rem);
+    font-size: clamp(1.5rem, 4.5vw, 2.5rem);
     font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 15px rgba(244,229,161,0.5);
+    margin-bottom: 0.6rem;
+    text-shadow: 0 0 25px rgba(244,229,161,0.6), 0 2px 10px rgba(0,0,0,0.5);
+    letter-spacing: 2px;
 }
 
 .blackboard-subtitle {
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    opacity: 0.9;
+    font-size: clamp(1rem, 2.8vw, 1.4rem);
+    opacity: 0.95;
+    letter-spacing: 1px;
 }
 
-/* Teacher */
-.teacher-container {
+/* Clock on Wall */
+.wall-clock {
     position: absolute;
-    bottom: 32%;
+    top: 12%;
+    right: 8%;
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #fff 0%, #f0f0f0 70%, #d0d0d0 100%);
+    border-radius: 50%;
+    border: 6px solid #4a3520;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3), inset 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 8;
+}
+
+.clock-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: #333;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.clock-hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    background: #333;
+    border-radius: 2px;
+}
+
+.clock-hand.hour {
+    width: 4px;
+    height: 20px;
+    transform: translateX(-50%) rotate(30deg);
+}
+
+.clock-hand.minute {
+    width: 3px;
+    height: 28px;
+    transform: translateX(-50%) rotate(180deg);
+}
+
+/* Poster on Wall */
+.wall-poster {
+    position: absolute;
+    top: 15%;
+    left: 8%;
+    width: 80px;
+    height: 100px;
+    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+    border: 3px solid #4a3520;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transform: rotate(-3deg);
+}
+
+.poster-text {
+    font-size: 0.7rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.poster-icon {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+/* Teacher - Innovative SVG Style */
+.teacher-container-new {
+    position: absolute;
+    bottom: 38%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;
@@ -526,193 +730,68 @@ body {
     align-items: center;
 }
 
-.teacher-figure {
-    position: relative;
-    width: 140px;
-    height: 220px;
+.teacher-svg-container {
+    width: 180px;
+    height: 260px;
     animation: teacherBreathe 4s ease-in-out infinite;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
 }
 
 @keyframes teacherBreathe {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    50% { transform: translateY(-6px); }
 }
 
-.teacher-head {
-    width: 80px;
-    height: 90px;
-    background: linear-gradient(180deg, #e8b896 0%, #d49a78 100%);
-    border-radius: 50% 50% 45% 45%;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-.teacher-beard {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 35px;
-    background: linear-gradient(180deg, #4a3728, #2c1810);
-    border-radius: 0 0 50% 50%;
-}
-
-.teacher-ghutra {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90px;
-    height: 40px;
-    background: white;
-    border-radius: 50% 50% 30% 30%;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-
-.teacher-ghutra::after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 85px;
-    height: 8px;
-    background: #c0392b;
-    border-radius: 4px;
-}
-
-.teacher-eyes {
-    position: absolute;
-    top: 35px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.teacher-eye {
-    width: 10px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
-}
-
-.teacher-eye::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    height: 7px;
-    background: #1a1a1a;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    animation: eyeMove 5s ease-in-out infinite;
-}
-
-@keyframes eyeMove {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(2px, -1px); }
-    50% { transform: translate(-2px, 0); }
-    75% { transform: translate(1px, 1px); }
-}
-
-.teacher-mouth {
-    position: absolute;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 6px;
-    background: #8b4513;
-    border-radius: 0 0 12px 12px;
-    transition: all 0.15s;
-    z-index: 5;
-}
-
-.teacher-speaking .teacher-mouth {
-    animation: teacherTalk 0.25s ease-in-out infinite;
-}
-
-@keyframes teacherTalk {
-    0%, 100% { height: 6px; width: 20px; border-radius: 0 0 12px 12px; }
-    50% { height: 12px; width: 16px; border-radius: 50%; }
-}
-
-.teacher-body {
-    width: 110px;
-    height: 120px;
-    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
-    margin: -8px auto 0;
-    border-radius: 50px 50px 0 0;
-    position: relative;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
-
-.teacher-body::before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 25px;
-    height: 70px;
-    background: linear-gradient(180deg, #d4af37, #b8941f);
-    border-radius: 4px;
-}
-
-.teacher-name-tag {
-    margin-top: 10px;
-    padding: 6px 18px;
+.teacher-name-tag-new {
+    margin-top: 15px;
+    padding: 10px 24px;
     background: linear-gradient(135deg, var(--teacher-color), #1a3a4f);
     border: 2px solid var(--gold);
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 800;
     color: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
 }
 
-/* ============ STUDENTS GRID ============ */
-.students-grid {
+/* Students - Innovative Grid */
+.students-grid-new {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 32%;
-    padding: 0.5rem;
-    z-index: 10;
+    height: 40%;
+    padding: 1rem;
+    z-index: 15;
     display: grid;
-    gap: 0.4rem;
+    gap: 0.8rem;
     align-items: end;
     justify-items: center;
 }
 
-.students-grid.layout-8 {
+.students-grid-new.layout-8 {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
 
-.students-grid.layout-6 {
+.students-grid-new.layout-6 {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
 
-.students-grid.layout-4 {
+.students-grid-new.layout-4 {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
 
-.students-grid.layout-5 {
+.students-grid-new.layout-5 {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
 }
 
-.student-desk {
+.student-desk-new {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -723,171 +802,130 @@ body {
     transition: all 0.5s;
 }
 
-.student-question {
+.student-question-new {
     position: absolute;
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     color: var(--deep-blue);
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: bold;
+    padding: 8px 14px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(212,175,55,0.5);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.6);
     opacity: 0;
     transition: all 0.4s;
     z-index: 30;
-    max-width: 120px;
+    max-width: 130px;
     text-align: center;
-    line-height: 1.3;
+    line-height: 1.4;
     border: 2px solid white;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
 }
 
-.student-question:hover, .student-question:active {
-    transform: translateX(-50%) scale(1.1);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.8);
+.student-question-new:hover {
+    transform: translateX(-50%) scale(1.2);
+    box-shadow: 0 12px 35px rgba(212,175,55,0.9);
 }
 
-.student-question.show {
+.student-question-new.show {
     opacity: 1;
-    animation: questionPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: questionPop 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.student-question.speaking {
-    animation: questionSpeak 0.5s ease-in-out infinite;
+.student-question-new.speaking {
+    animation: questionSpeak 0.6s ease-in-out infinite;
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
+    border-color: #e74c3c;
 }
 
 @keyframes questionSpeak {
     0%, 100% { transform: translateX(-50%) scale(1); }
-    50% { transform: translateX(-50%) scale(1.15); }
+    50% { transform: translateX(-50%) scale(1.25); }
 }
 
 @keyframes questionPop {
-    0% { transform: translateX(-50%) scale(0) translateY(20px); }
+    0% { transform: translateX(-50%) scale(0) translateY(25px); }
     100% { transform: translateX(-50%) scale(1) translateY(0); }
 }
 
-.student-figure {
+.student-svg-container {
     width: 100%;
-    max-width: 70px;
+    max-width: 90px;
     height: auto;
-    aspect-ratio: 2/3;
-    position: relative;
-    animation: studentBreathe 3s ease-in-out infinite;
+    aspect-ratio: 1/1.4;
+    animation: studentBreathe 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.3));
 }
 
 @keyframes studentBreathe {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    50% { transform: translateY(-3px); }
 }
 
-.student-head {
-    width: 60%;
-    aspect-ratio: 1/1.1;
-    background: linear-gradient(180deg, #e8b896 0%, #d49a78 100%);
-    border-radius: 50% 50% 45% 45%;
-    margin: 0 auto;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.student-hair {
-    position: absolute;
-    top: -5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 110%;
-    height: 40%;
-    border-radius: 50% 50% 0 0;
-}
-
-.student-eyes {
-    position: absolute;
-    top: 40%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 15%;
-}
-
-.student-eye {
-    width: 12%;
-    aspect-ratio: 1/1.2;
-    background: #1a1a1a;
-    border-radius: 50%;
-}
-
-.student-body {
-    width: 75%;
-    height: 50%;
-    margin: -5% auto 0;
-    border-radius: 35% 35% 0 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.student-desk-surface {
-    width: 90%;
-    max-width: 80px;
-    height: 6px;
+.student-desk-surface-new {
+    width: 95%;
+    max-width: 100px;
+    height: 10px;
     background: linear-gradient(180deg, #8b6f47, #5d3a1a);
-    border-radius: 3px;
-    margin-top: 2px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    border-radius: 5px;
+    margin-top: 3px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
 }
 
 /* Teacher Speech Bubble */
 .teacher-speech {
     position: absolute;
-    bottom: 55%;
+    bottom: 62%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255,255,255,0.98);
+    background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
     color: var(--deep-blue);
-    padding: 1rem 1.5rem;
-    border-radius: 20px;
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    font-weight: bold;
+    padding: 1.5rem 2.2rem;
+    border-radius: 28px;
+    font-size: clamp(1rem, 2.8vw, 1.3rem);
+    font-weight: 700;
     max-width: 90%;
     text-align: center;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.6);
     opacity: 0;
-    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 50;
     border: 3px solid var(--gold);
-    line-height: 1.6;
+    line-height: 1.7;
+    letter-spacing: 0.5px;
 }
 
 .teacher-speech::after {
     content: '';
     position: absolute;
-    bottom: -15px;
+    bottom: -18px;
     left: 50%;
     transform: translateX(-50%);
-    border: 12px solid transparent;
+    border: 14px solid transparent;
     border-top-color: rgba(255,255,255,0.98);
 }
 
 .teacher-speech.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(-5px);
+    transform: translateX(-50%) translateY(-8px);
 }
 
 /* ============ QUESTION SCREEN ============ */
 .question-screen {
     position: fixed;
     inset: 0;
-    top: 60px;
+    top: 70px;
     background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 100%);
     display: none;
     opacity: 0;
-    transition: opacity 0.8s;
+    transition: opacity 1s;
     z-index: 100;
-    padding: 1rem;
+    padding: 1.5rem;
     overflow-y: auto;
 }
 
@@ -897,108 +935,104 @@ body {
     align-items: center;
     justify-content: flex-start;
     opacity: 1;
-    padding-top: 2rem;
+    padding-top: 2.5rem;
 }
 
 .question-container {
-    max-width: 800px;
+    max-width: 850px;
     width: 100%;
     text-align: center;
 }
 
 .question-card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(212,175,55,0.3);
-    border-radius: 25px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    backdrop-filter: blur(40px);
+    border: 2px solid rgba(212,175,55,0.4);
+    border-radius: 35px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.6);
 }
 
 .question-text {
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
     color: white;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+    font-weight: 600;
 }
 
 .choice-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
 }
 
 .choice-btn {
-    padding: 1rem 1.5rem;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    font-weight: bold;
+    padding: 1.4rem 2.5rem;
+    font-size: clamp(1rem, 2.8vw, 1.2rem);
+    font-weight: 800;
     border: none;
-    border-radius: 15px;
+    border-radius: 24px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.5s;
     font-family: inherit;
-    position: relative;
-    overflow: hidden;
-    min-width: 180px;
+    min-width: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
+    letter-spacing: 1px;
 }
 
 .choice-btn.listen {
     background: linear-gradient(135deg, #0d7377, #14a3a8);
     color: white;
-    box-shadow: 0 8px 25px rgba(13,115,119,0.5);
+    box-shadow: 0 12px 35px rgba(13,115,119,0.6);
 }
 
 .choice-btn.listen:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(13,115,119,0.7);
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 20px 50px rgba(13,115,119,0.8);
 }
 
 .choice-btn.explain {
-    background: linear-gradient(135deg, var(--gold), #b8941f);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     color: var(--deep-blue);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+    box-shadow: 0 12px 35px rgba(212,175,55,0.6);
 }
 
 .choice-btn.explain:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 30px rgba(212,175,55,0.7);
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 20px 50px rgba(212,175,55,0.8);
 }
 
 .choice-btn.ask-again {
     background: linear-gradient(135deg, #9b59b6, #8e44ad);
     color: white;
-    box-shadow: 0 8px 25px rgba(155,89,182,0.5);
+    box-shadow: 0 12px 35px rgba(155,89,182,0.6);
 }
 
-.choice-icon {
-    font-size: 1.5rem;
-}
+.choice-icon { font-size: 1.8rem; }
 
 .audio-player {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    backdrop-filter: blur(40px);
     border: 2px solid var(--gold);
-    border-radius: 20px;
-    padding: 1.5rem;
-    margin: 1rem auto;
-    max-width: 700px;
+    border-radius: 30px;
+    padding: 2.5rem;
+    margin: 2rem auto;
+    max-width: 750px;
     display: none;
     width: 100%;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.6);
 }
 
-.audio-player.show {
-    display: block;
-    animation: slideUp 0.6s ease;
-}
+.audio-player.show { display: block; animation: slideUp 0.7s ease; }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -1006,443 +1040,271 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .audio-btn {
-    width: 55px;
-    height: 55px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--gold), var(--gold-light));
     border: none;
     color: var(--deep-blue);
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.5s;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 12px 35px rgba(212,175,55,0.6);
 }
 
-.audio-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.6);
-}
+.audio-btn:hover { transform: scale(1.2); }
 
-.audio-btn.playing {
-    animation: pulse 1s ease-in-out infinite;
+.audio-btn.playing { animation: audioPulse 1.8s ease-in-out infinite; }
+
+@keyframes audioPulse {
+    0%, 100% { box-shadow: 0 12px 35px rgba(212,175,55,0.6); }
+    50% { box-shadow: 0 12px 35px rgba(212,175,55,0.6), 0 0 0 25px rgba(212,175,55,0); }
 }
 
 .verse-display-large {
     font-family: 'Amiri', serif;
-    font-size: clamp(1.1rem, 3vw, 1.6rem);
-    line-height: 2.2;
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    line-height: 2.4;
     color: var(--gold-light);
     text-align: center;
-    padding: 1rem;
-    background: rgba(0,0,0,0.3);
-    border-radius: 15px;
-    margin-bottom: 1rem;
+    padding: 2rem;
+    background: rgba(0,0,0,0.4);
+    border-radius: 24px;
+    margin-bottom: 1.5rem;
+    border: 2px solid rgba(212,175,55,0.3);
 }
 
 .answer-display {
-    background: linear-gradient(135deg, rgba(13,115,119,0.2), rgba(212,175,55,0.1));
+    background: linear-gradient(135deg, rgba(13,115,119,0.25), rgba(212,175,55,0.15));
     border: 2px solid var(--emerald);
-    border-radius: 20px;
-    padding: 1.5rem;
-    margin-top: 1rem;
+    border-radius: 30px;
+    padding: 2.5rem;
+    margin-top: 2rem;
     display: none;
-    animation: slideUp 0.8s ease;
+    animation: slideUp 0.9s ease;
     width: 100%;
-    max-width: 700px;
+    max-width: 750px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-.answer-display.show {
-    display: block;
-}
+.answer-display.show { display: block; }
 
 .answer-title {
     color: var(--gold);
-    font-size: clamp(1.1rem, 3vw, 1.3rem);
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+    font-weight: 800;
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .answer-text {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    line-height: 1.8;
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    line-height: 1.9;
     color: white;
+    font-weight: 500;
 }
 
 .next-section-btn {
-    padding: 0.8rem 2rem;
-    background: linear-gradient(135deg, var(--emerald), #14a3a8);
+    padding: 1.2rem 3rem;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
     color: white;
     border: none;
-    border-radius: 25px;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-    font-weight: bold;
+    border-radius: 35px;
+    font-size: clamp(1rem, 2.8vw, 1.2rem);
+    font-weight: 800;
     cursor: pointer;
-    margin-top: 1.5rem;
-    transition: all 0.3s;
+    margin-top: 2.5rem;
+    transition: all 0.5s;
     font-family: inherit;
-    box-shadow: 0 8px 25px rgba(13,115,119,0.5);
+    box-shadow: 0 12px 35px rgba(13,115,119,0.6);
 }
 
 .next-section-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 30px rgba(13,115,119,0.7);
+    transform: translateY(-8px) scale(1.08);
+    box-shadow: 0 20px 50px rgba(13,115,119,0.8);
 }
 
 .speaker-indicator {
     position: fixed;
-    bottom: 20px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
+    backdrop-filter: blur(25px);
     border: 2px solid var(--gold);
-    border-radius: 30px;
-    padding: 10px 20px;
+    border-radius: 40px;
+    padding: 15px 30px;
     display: none;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     z-index: 2000;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+    font-weight: 600;
 }
 
-.speaker-indicator.show {
-    display: flex;
-    animation: slideUp 0.3s ease;
-}
+.speaker-indicator.show { display: flex; animation: slideUp 0.4s ease; }
 
 .speaker-avatar {
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
 }
 
-.speaker-avatar.teacher {
-    background: linear-gradient(135deg, var(--teacher-color), #1a3a4f);
-}
+.speaker-avatar.teacher { background: linear-gradient(135deg, var(--teacher-color), #1a3a4f); }
+.speaker-avatar.student { background: linear-gradient(135deg, var(--student-color), #922b21); }
 
-.speaker-avatar.student {
-    background: linear-gradient(135deg, var(--student-color), #922b21);
-}
-
-.speaker-waves {
-    display: flex;
-    gap: 3px;
-    align-items: center;
-    height: 20px;
-}
+.speaker-waves { display: flex; gap: 5px; align-items: center; height: 30px; }
 
 .speaker-wave {
-    width: 3px;
-    background: var(--gold);
-    border-radius: 2px;
-    animation: wave 0.8s ease-in-out infinite;
+    width: 5px;
+    background: linear-gradient(180deg, var(--gold), var(--gold-light));
+    border-radius: 3px;
+    animation: wave 0.9s ease-in-out infinite;
 }
 
-.speaker-wave:nth-child(1) { animation-delay: 0s; height: 8px; }
-.speaker-wave:nth-child(2) { animation-delay: 0.1s; height: 15px; }
-.speaker-wave:nth-child(3) { animation-delay: 0.2s; height: 10px; }
-.speaker-wave:nth-child(4) { animation-delay: 0.3s; height: 18px; }
+.speaker-wave:nth-child(1) { animation-delay: 0s; height: 12px; }
+.speaker-wave:nth-child(2) { animation-delay: 0.1s; height: 22px; }
+.speaker-wave:nth-child(3) { animation-delay: 0.2s; height: 15px; }
+.speaker-wave:nth-child(4) { animation-delay: 0.3s; height: 28px; }
 
 @keyframes wave {
     0%, 100% { transform: scaleY(0.5); }
     50% { transform: scaleY(1); }
 }
 
-/* Sound Notification */
 .sound-notification {
     position: fixed;
-    top: 80px;
+    top: 90px;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(135deg, #2ecc71, #27ae60);
     color: white;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-weight: bold;
+    padding: 16px 32px;
+    border-radius: 40px;
+    font-weight: 800;
     z-index: 3000;
     display: none;
-    box-shadow: 0 10px 30px rgba(46,204,113,0.5);
-    animation: slideDown 0.5s ease;
+    box-shadow: 0 18px 50px rgba(46,204,113,0.6);
+    animation: slideDown 0.6s ease;
+    letter-spacing: 1px;
 }
 
-.sound-notification.show {
-    display: block;
-}
+.sound-notification.show { display: block; }
 
 @keyframes slideDown {
-    from { transform: translateX(-50%) translateY(-100px); }
-    to { transform: translateX(-50%) translateY(0); }
+    from { transform: translateX(-50%) translateY(-120px); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
 }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
-    .students-grid {
-        height: 35%;
-        padding: 0.3rem;
-        gap: 0.3rem;
-    }
-    
-    .student-figure {
-        max-width: 60px;
-    }
-    
-    .student-question {
-        font-size: 0.6rem;
-        padding: 4px 7px;
-        max-width: 90px;
-        border-radius: 10px;
-    }
-    
-    .teacher-figure {
-        width: 110px;
-        height: 180px;
-    }
-    
-    .teacher-head {
-        width: 65px;
-        height: 75px;
-    }
-    
-    .teacher-body {
-        width: 90px;
-        height: 100px;
-    }
-    
-    .blackboard {
-        height: 28%;
-        border-width: 8px;
-    }
-    
-    .menu-logo {
-        font-size: 0.9rem;
-    }
-    
-    .teacher-container {
-        bottom: 35%;
-    }
-    
-    .stop-sound-btn {
-        width: 45px;
-        height: 45px;
-        top: 65px;
-        left: 10px;
-    }
+    .students-grid-new { height: 42%; padding: 0.5rem; gap: 0.5rem; }
+    .student-svg-container { max-width: 70px; }
+    .student-question-new { font-size: 0.65rem; padding: 5px 10px; max-width: 100px; }
+    .teacher-svg-container { width: 130px; height: 190px; }
+    .blackboard-new { height: 28%; }
+    .menu-logo { font-size: 1.1rem; }
+    .teacher-container-new { bottom: 42%; }
+    .wall-clock { width: 50px; height: 50px; }
+    .wall-poster { width: 60px; height: 75px; }
 }
 
 @media (max-width: 480px) {
-    .students-grid {
-        height: 38%;
-        gap: 0.2rem;
-        padding: 0.2rem;
-    }
-    
-    .student-figure {
-        max-width: 55px;
-    }
-    
-    .student-question {
-        font-size: 0.55rem;
-        max-width: 75px;
-        padding: 3px 5px;
-        line-height: 1.2;
-    }
-    
-    .teacher-figure {
-        width: 90px;
-        height: 150px;
-    }
-    
-    .teacher-head {
-        width: 55px;
-        height: 65px;
-    }
-    
-    .teacher-body {
-        width: 75px;
-        height: 85px;
-    }
-    
-    .teacher-name-tag {
-        font-size: 0.75rem;
-        padding: 4px 12px;
-    }
-    
-    .blackboard {
-        top: 5%;
-        height: 25%;
-    }
-    
-    .teacher-container {
-        bottom: 38%;
-    }
-}
-
-@media (max-width: 360px) {
-    .student-figure {
-        max-width: 48px;
-    }
-    
-    .student-question {
-        font-size: 0.5rem;
-        max-width: 65px;
-    }
+    .students-grid-new { height: 44%; gap: 0.3rem; padding: 0.3rem; }
+    .student-svg-container { max-width: 60px; }
+    .student-question-new { font-size: 0.6rem; max-width: 85px; padding: 4px 8px; }
+    .teacher-svg-container { width: 110px; height: 160px; }
+    .blackboard-new { top: 4%; height: 26%; }
+    .teacher-container-new { bottom: 44%; }
+    .teacher-name-tag-new { font-size: 0.8rem; padding: 8px 16px; }
+    .view-card { width: 260px; padding: 2rem; }
+    .wall-clock { width: 40px; height: 40px; top: 8%; right: 5%; }
+    .wall-poster { width: 50px; height: 65px; top: 10%; left: 5%; }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-    .students-grid {
-        height: 30%;
-    }
-    
-    .student-figure {
-        max-width: 80px;
-    }
-    
-    .student-question {
-        font-size: 0.75rem;
-        max-width: 130px;
-    }
+    .students-grid-new { height: 35%; }
+    .student-svg-container { max-width: 90px; }
+    .student-question-new { font-size: 0.8rem; max-width: 140px; }
 }
 
 @media (min-width: 1025px) {
-    .students-grid {
-        height: 28%;
-    }
-    
-    .student-figure {
-        max-width: 90px;
-    }
-    
-    .student-question {
-        font-size: 0.8rem;
-        max-width: 150px;
-    }
+    .students-grid-new { height: 32%; }
+    .student-svg-container { max-width: 100px; }
+    .student-question-new { font-size: 0.85rem; max-width: 160px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Sound Notification -->
 <div class="sound-notification" id="soundNotification"></div>
+<button class="stop-sound-btn" id="stopSoundBtn" onclick="stopAllSound()">⏹️</button>
 
-<!-- Stop Sound Button (Always visible when speaking) -->
-<button class="stop-sound-btn" id="stopSoundBtn" onclick="stopAllSound()" title="إيقاف الصوت">
-    ⏹️
-</button>
-
-<!-- Top Menu -->
 <div class="top-menu">
     <div class="menu-right">
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
         <div class="menu-logo">📖 سورة إبراهيم</div>
     </div>
-    <button class="sound-toggle-btn" id="soundToggleBtn" onclick="toggleSound()" title="تفعيل/إيقاف الصوت">
-        🔇
-    </button>
+    <button class="sound-toggle-btn" id="soundToggleBtn" onclick="toggleSound()">🔇</button>
 </div>
 
 <div class="menu-dropdown" id="menuDropdown">
-    <div class="menu-item" onclick="goToSection('intro')">
-        <div class="menu-item-icon">📖</div>
-        <div class="menu-item-text">التمهيد</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('topics')">
-        <div class="menu-item-icon">📋</div>
-        <div class="menu-item-text">أبرز موضوعات السورة</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('verses')">
-        <div class="menu-item-icon">📜</div>
-        <div class="menu-item-text">الآيات</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('meaning')">
-        <div class="menu-item-icon">📝</div>
-        <div class="menu-item-text">المعنى الإجمالي للآيات</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('words')">
-        <div class="menu-item-icon">📚</div>
-        <div class="menu-item-text">معاني الكلمات</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('benefits')">
-        <div class="menu-item-icon">✨</div>
-        <div class="menu-item-text">فوائد وأحكام</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('think')">
-        <div class="menu-item-icon">🤔</div>
-        <div class="menu-item-text">فكّر</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('connect')">
-        <div class="menu-item-icon">🔗</div>
-        <div class="menu-item-text">أربط</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('tech')">
-        <div class="menu-item-icon">💻</div>
-        <div class="menu-item-text">استثمر التقنية</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('recitation')">
-        <div class="menu-item-icon">🎙️</div>
-        <div class="menu-item-text">أجود تلاوتي</div>
-    </div>
-    <div class="menu-item" onclick="goToSection('assessment')">
-        <div class="menu-item-icon">✅</div>
-        <div class="menu-item-text">تقويم - أتأمل وأجيب</div>
-    </div>
+    <div class="menu-item" onclick="goToSection('intro')"><div class="menu-item-icon">📖</div><div class="menu-item-text">التمهيد</div></div>
+    <div class="menu-item" onclick="goToSection('topics')"><div class="menu-item-icon">📋</div><div class="menu-item-text">أبرز موضوعات السورة</div></div>
+    <div class="menu-item" onclick="goToSection('verses')"><div class="menu-item-icon">📜</div><div class="menu-item-text">الآيات</div></div>
+    <div class="menu-item" onclick="goToSection('meaning')"><div class="menu-item-icon">📝</div><div class="menu-item-text">المعنى الإجمالي للآيات</div></div>
+    <div class="menu-item" onclick="goToSection('words')"><div class="menu-item-icon">📚</div><div class="menu-item-text">معاني الكلمات</div></div>
+    <div class="menu-item" onclick="goToSection('benefits')"><div class="menu-item-icon">✨</div><div class="menu-item-text">فوائد وأحكام</div></div>
+    <div class="menu-item" onclick="goToSection('think')"><div class="menu-item-icon">🤔</div><div class="menu-item-text">فكّر</div></div>
+    <div class="menu-item" onclick="goToSection('connect')"><div class="menu-item-icon">🔗</div><div class="menu-item-text">أربط</div></div>
+    <div class="menu-item" onclick="goToSection('tech')"><div class="menu-item-icon">💻</div><div class="menu-item-text">استثمر التقنية</div></div>
+    <div class="menu-item" onclick="goToSection('recitation')"><div class="menu-item-icon">🎙️</div><div class="menu-item-text">أجود تلاوتي</div></div>
+    <div class="menu-item" onclick="goToSection('assessment')"><div class="menu-item-icon">✅</div><div class="menu-item-text">تقويم - أتأمل وأجيب</div></div>
 </div>
 
-<!-- Speaker Indicator -->
 <div class="speaker-indicator" id="speakerIndicator">
     <div class="speaker-avatar" id="speakerAvatar">👨‍🏫</div>
     <div id="speakerName">المعلم</div>
     <div class="speaker-waves">
-        <div class="speaker-wave"></div>
-        <div class="speaker-wave"></div>
-        <div class="speaker-wave"></div>
-        <div class="speaker-wave"></div>
+        <div class="speaker-wave"></div><div class="speaker-wave"></div><div class="speaker-wave"></div><div class="speaker-wave"></div>
     </div>
 </div>
 
-<!-- Landing Page -->
 <div class="landing" id="landing">
-    <div class="landing-bg">
-        <div class="landing-particles" id="particles"></div>
-    </div>
-    
+    <div class="landing-bg"><div class="landing-particles" id="particles"></div></div>
     <div class="landing-content">
         <div class="lesson-badge">الدرس الخامس عشر</div>
         <h1 class="main-title">سورة إبراهيم</h1>
         <div class="subtitle">مادة القرآن الكريم وتفسيره</div>
         <div class="verse-range">الآيات من 24 إلى 31</div>
-        
-        <!-- Sound Status -->
         <div class="sound-status">
             <span class="dot" id="soundDot"></span>
             <span id="soundStatusText">الصوت غير مفعّل (اضغط 🔇 لتفعيله)</span>
         </div>
-        
         <div class="view-selector">
             <div class="view-card disabled">
                 <span class="view-icon">👨‍🏫</span>
                 <div class="view-title">من وجهة نظر المعلم</div>
                 <div class="view-desc">عرض تفصيلي للمنهج والشرح</div>
             </div>
-            
             <div class="view-card" onclick="enterStudentView()">
                 <span class="view-icon">👨‍🎓</span>
                 <div class="view-title">من وجهة نظر الطالب</div>
@@ -1452,37 +1314,151 @@ body {
     </div>
 </div>
 
-<!-- Classroom Scene -->
+<!-- INNOVATIVE CLASSROOM -->
 <div class="classroom" id="classroom">
-    <div class="classroom-bg"></div>
-    <div class="classroom-floor"></div>
-    
-    <div class="blackboard">
-        <div class="blackboard-content">
-            <div class="blackboard-title" id="boardTitle">سورة إبراهيم</div>
-            <div class="blackboard-subtitle" id="boardSubtitle">الآيات 24 - 31</div>
+    <div class="classroom-scene">
+        <!-- Back Wall -->
+        <div class="classroom-wall">
+            <div class="wall-pattern"></div>
         </div>
-    </div>
-    
-    <div class="teacher-speech" id="teacherSpeech"></div>
-    
-    <div class="teacher-container">
-        <div class="teacher-figure" id="teacherFigure">
-            <div class="teacher-head">
-                <div class="teacher-ghutra"></div>
-                <div class="teacher-eyes">
-                    <div class="teacher-eye"></div>
-                    <div class="teacher-eye"></div>
+        
+        <!-- Floor -->
+        <div class="classroom-floor-new">
+            <div class="floor-tiles"></div>
+        </div>
+        
+        <!-- Ceiling Light -->
+        <div class="ceiling-light">
+            <div class="light-fixture"></div>
+            <div class="light-bulb"></div>
+            <div class="light-beam"></div>
+        </div>
+        
+        <!-- Wall Clock -->
+        <div class="wall-clock">
+            <div class="clock-center"></div>
+            <div class="clock-hand hour"></div>
+            <div class="clock-hand minute"></div>
+        </div>
+        
+        <!-- Wall Poster -->
+        <div class="wall-poster">
+            <div class="poster-icon">📖</div>
+            <div class="poster-text">العلم نور</div>
+        </div>
+        
+        <!-- Blackboard -->
+        <div class="blackboard-new">
+            <div class="blackboard-frame">
+                <div class="blackboard-surface">
+                    <div class="blackboard-content">
+                        <div class="blackboard-title" id="boardTitle">سورة إبراهيم</div>
+                        <div class="blackboard-subtitle" id="boardSubtitle">الآيات 24 - 31</div>
+                    </div>
                 </div>
-                <div class="teacher-mouth"></div>
-                <div class="teacher-beard"></div>
+                <div class="blackboard-chalk-tray">
+                    <div class="chalk white"></div>
+                    <div class="chalk yellow"></div>
+                    <div class="chalk red"></div>
+                </div>
             </div>
-            <div class="teacher-body"></div>
         </div>
-        <div class="teacher-name-tag">👨‍🏫 الأستاذ أحمد</div>
+        
+        <!-- Teacher Speech -->
+        <div class="teacher-speech" id="teacherSpeech"></div>
+        
+        <!-- Teacher SVG -->
+        <div class="teacher-container-new">
+            <div class="teacher-svg-container" id="teacherFigure">
+                <svg viewBox="0 0 180 260" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Shadow -->
+                    <ellipse cx="90" cy="250" rx="60" ry="8" fill="rgba(0,0,0,0.3)"/>
+                    
+                    <!-- Body (Thobe) -->
+                    <path d="M 50 140 Q 50 130 60 125 L 120 125 Q 130 130 130 140 L 135 240 Q 135 245 130 245 L 50 245 Q 45 245 45 240 Z" 
+                          fill="url(#thobeGrad)" stroke="#1a252f" stroke-width="1"/>
+                    
+                    <!-- Thobe Details -->
+                    <line x1="90" y1="130" x2="90" y2="240" stroke="#1a252f" stroke-width="1" opacity="0.3"/>
+                    <path d="M 70 140 Q 90 145 110 140" stroke="#1a252f" stroke-width="1" fill="none" opacity="0.3"/>
+                    
+                    <!-- Arms -->
+                    <path d="M 50 140 Q 35 160 30 200 Q 28 210 35 210 Q 42 210 45 200 Q 50 170 55 150" 
+                          fill="url(#thobeGrad)" stroke="#1a252f" stroke-width="1"/>
+                    <path d="M 130 140 Q 145 160 150 200 Q 152 210 145 210 Q 138 210 135 200 Q 130 170 125 150" 
+                          fill="url(#thobeGrad)" stroke="#1a252f" stroke-width="1"/>
+                    
+                    <!-- Hands -->
+                    <circle cx="33" cy="208" r="8" fill="#e8b896"/>
+                    <circle cx="147" cy="208" r="8" fill="#e8b896"/>
+                    
+                    <!-- Head -->
+                    <ellipse cx="90" cy="95" rx="38" ry="42" fill="url(#skinGrad)"/>
+                    
+                    <!-- Ghutra (Head Covering) -->
+                    <path d="M 52 80 Q 52 50 90 45 Q 128 50 128 80 Q 128 95 120 100 L 60 100 Q 52 95 52 80 Z" 
+                          fill="url(#ghutraGrad)"/>
+                    
+                    <!-- Agal (Black Cord) -->
+                    <ellipse cx="90" cy="62" rx="36" ry="6" fill="#1a1a1a"/>
+                    <ellipse cx="90" cy="68" rx="36" ry="6" fill="#2a2a2a"/>
+                    
+                    <!-- Face Details -->
+                    <!-- Eyes -->
+                    <ellipse cx="75" cy="95" rx="5" ry="6" fill="white"/>
+                    <ellipse cx="105" cy="95" rx="5" ry="6" fill="white"/>
+                    <circle cx="76" cy="96" r="3" fill="#1a1a1a">
+                        <animate attributeName="cx" values="76;78;74;76" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="106" cy="96" r="3" fill="#1a1a1a">
+                        <animate attributeName="cx" values="106;108;104;106" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+                    
+                    <!-- Eyebrows -->
+                    <path d="M 68 85 Q 75 82 82 85" stroke="#3d2817" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <path d="M 98 85 Q 105 82 112 85" stroke="#3d2817" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    
+                    <!-- Nose -->
+                    <path d="M 90 100 Q 88 108 90 112 Q 92 108 90 100" fill="#d49a78"/>
+                    
+                    <!-- Beard -->
+                    <path d="M 60 110 Q 60 130 90 135 Q 120 130 120 110 Q 115 125 90 128 Q 65 125 60 110 Z" 
+                          fill="url(#beardGrad)"/>
+                    
+                    <!-- Mouth -->
+                    <path id="teacherMouth" d="M 82 118 Q 90 122 98 118" stroke="#8b4513" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    
+                    <!-- Smile lines -->
+                    <path d="M 65 105 Q 68 110 70 112" stroke="#c99878" stroke-width="1" fill="none" opacity="0.5"/>
+                    <path d="M 115 105 Q 112 110 110 112" stroke="#c99878" stroke-width="1" fill="none" opacity="0.5"/>
+                    
+                    <!-- Gradients -->
+                    <defs>
+                        <linearGradient id="thobeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#34495e"/>
+                            <stop offset="100%" style="stop-color:#1a252f"/>
+                        </linearGradient>
+                        <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f0c9a8"/>
+                            <stop offset="100%" style="stop-color:#d49a78"/>
+                        </linearGradient>
+                        <linearGradient id="ghutraGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ffffff"/>
+                            <stop offset="100%" style="stop-color:#f0f0f0"/>
+                        </linearGradient>
+                        <linearGradient id="beardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#5a4030"/>
+                            <stop offset="100%" style="stop-color:#3d2817"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="teacher-name-tag-new">👨‍🏫 الأستاذ أحمد</div>
+        </div>
+        
+        <!-- Students Grid -->
+        <div class="students-grid-new" id="studentsGrid"></div>
     </div>
-    
-    <div class="students-grid" id="studentsGrid"></div>
 </div>
 
 <!-- Question Screen -->
@@ -1507,8 +1483,8 @@ body {
             <div class="audio-controls">
                 <button class="audio-btn" onclick="toggleAudio()" id="playBtn">▶️</button>
             </div>
-            <div style="text-align: center; margin-top: 1rem; color: var(--gold-light); font-size: 0.9rem;">
-                بصوت الشيخ مشاري العفاسي
+            <div style="text-align: center; margin-top: 1.5rem; color: var(--gold-light); font-size: 1rem; font-weight: 600;">
+                🎙️ بصوت الشيخ مشاري العفاسي
             </div>
         </div>
         
@@ -1532,151 +1508,118 @@ body {
 <script>
 const sections = [
     {
-        id: 'intro',
-        title: 'التمهيد',
-        boardTitle: 'سورة إبراهيم',
-        boardSubtitle: 'التمهيد للدرس',
+        id: 'intro', title: 'التمهيد', boardTitle: 'سورة إبراهيم', boardSubtitle: 'التمهيد للدرس',
         teacherIntro: 'بسم الله الرحمن الرحيم. أهلاً بكم طلابي الأعزاء! اليوم سندرس سورة إبراهيم عليه السلام. هل أنتم مستعدون؟',
         students: [
-            { question: 'نعم أستاذ! ما هي سورة إبراهيم؟', answer: 'سورة إبراهيم سورة مكية، وعدد آياتها اثنتان وخمسون آية، ومن أهم مقاصدها تذكير الناس بنعم الله عليهم وحثهم على شكرها، وتحذيرهم من جحودها وكفرها.', color: '#e74c3c' },
-            { question: 'أستاذ، لماذا سُميت بسورة إبراهيم؟', answer: 'سُميت بسورة إبراهيم لأن الله تعالى ذكر فيها قصة نبيه إبراهيم عليه السلام مع قومه، ودعاءه لأهل مكة، وهو من أولي العزم من الرسل.', color: '#3498db' },
-            { question: 'ما الفرق بين السور المكية والمدنية؟', answer: 'السور المكية نزلت قبل الهجرة وتركز على العقيدة والتوحيد، والمدنية نزلت بعد الهجرة وتركز على الأحكام والتشريع. وسورة إبراهيم من السور المكية.', color: '#2ecc71' },
+            { question: 'نعم أستاذ! ما هي سورة إبراهيم؟', answer: 'سورة إبراهيم سورة مكية، وعدد آياتها اثنتان وخمسون آية، ومن أهم مقاصدها تذكير الناس بنعم الله عليهم وحثهم على شكرها.', color: '#e74c3c' },
+            { question: 'أستاذ، لماذا سُميت بسورة إبراهيم؟', answer: 'سُميت بسورة إبراهيم لأن الله تعالى ذكر فيها قصة نبيه إبراهيم عليه السلام مع قومه، ودعاءه لأهل مكة.', color: '#3498db' },
+            { question: 'ما الفرق بين السور المكية والمدنية؟', answer: 'السور المكية نزلت قبل الهجرة وتركز على العقيدة والتوحيد، والمدنية نزلت بعد الهجرة وتركز على الأحكام.', color: '#2ecc71' },
             { question: 'كم عدد آيات سورة إبراهيم؟', answer: 'عدد آيات سورة إبراهيم اثنتان وخمسون آية، وهي السورة الرابعة عشرة في ترتيب المصحف الشريف.', color: '#f39c12' }
         ]
     },
     {
-        id: 'topics',
-        title: 'أبرز موضوعات السورة',
-        boardTitle: 'أبرز موضوعات السورة',
-        boardSubtitle: 'المحاور الرئيسية',
+        id: 'topics', title: 'أبرز موضوعات السورة', boardTitle: 'أبرز موضوعات السورة', boardSubtitle: 'المحاور الرئيسية',
         teacherIntro: 'ممتاز! الآن لنتعرف على أبرز موضوعات سورة إبراهيم. كل طالب سيسأل عن موضوع مختلف.',
         students: [
-            { question: 'ما هي قضايا العقيدة في السورة؟', answer: 'تقرير قضايا العقيدة كالتوحيد، والرسالة، والبعث، والحساب، والجزاء. وهذه أصول الإيمان التي بعث الله من أجلها الرسل.', color: '#e74c3c' },
-            { question: 'ما أخبار الرسل في السورة؟', answer: 'ذكر بعض أخبار الرسل عليهم الصلاة والسلام، وصبرهم على أقوامهم، وبيان مخالفة الرسل من التبليغ والإنذار والنصح والتبيين.', color: '#3498db' },
-            { question: 'كيف بينت السورة نعمة الله؟', answer: 'بينت نعمة الله تعالى على الناس، وأنها تزداد بالشكر، وأن أكثر الناس يقابلونها بالجحود والكفران.', color: '#2ecc71' },
-            { question: 'ما التحذير والوعيد في السورة؟', answer: 'التحذير والوعيد، وتصوير مشاهد القيامة، وما يكون فيها من الحساب والجزاء والعذاب للكافرين.', color: '#f39c12' }
+            { question: 'ما هي قضايا العقيدة في السورة؟', answer: 'تقرير قضايا العقيدة كالتوحيد، والرسالة، والبعث، والحساب، والجزاء.', color: '#e74c3c' },
+            { question: 'ما أخبار الرسل في السورة؟', answer: 'ذكر بعض أخبار الرسل عليهم الصلاة والسلام، وصبرهم على أقوامهم.', color: '#3498db' },
+            { question: 'كيف بينت السورة نعمة الله؟', answer: 'بينت نعمة الله تعالى على الناس، وأنها تزداد بالشكر.', color: '#2ecc71' },
+            { question: 'ما التحذير والوعيد في السورة؟', answer: 'التحذير والوعيد، وتصوير مشاهد القيامة، وما يكون فيها من الحساب والجزاء.', color: '#f39c12' }
         ]
     },
     {
-        id: 'verses',
-        title: 'الآيات',
-        boardTitle: 'الآيات المقررة',
-        boardSubtitle: 'من الآية 24 إلى 31',
+        id: 'verses', title: 'الآيات', boardTitle: 'الآيات المقررة', boardSubtitle: 'من الآية 24 إلى 31',
         teacherIntro: 'الآن نقرأ الآيات المقررة من سورة إبراهيم. استمعوا جيداً.',
         students: [
-            { question: 'أستاذ، نريد أن نسمع الآية 24', answer: 'قال تعالى: "أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ". شبه الله كلمة التوحيد بشجرة طيبة.', color: '#e74c3c' },
-            { question: 'ماذا تقول الآية 25؟', answer: 'قال تعالى: "تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا ۗ وَيَضْرِبُ اللَّهُ الْأَمْثَالَ لِلنَّاسِ لَعَلَّهُمْ يَتَذَكَّرُونَ". أي تعطي ثمرها في كل وقت.', color: '#3498db' },
-            { question: 'وما معنى الآية 26؟', answer: 'قال تعالى: "وَمَثَلُ كَلِمَةٍ خَبِيثَةٍ كَشَجَرَةٍ خَبِيثَةٍ اجْتُثَّتْ مِن فَوْقِ الْأَرْضِ مَا لَهَا مِن قَرَارٍ". الكلمة الخبيثة هي الكفر.', color: '#2ecc71' },
-            { question: 'أستاذ، وضح لنا الآية 27', answer: 'قال تعالى: "يُثَبِّتُ اللَّهُ الَّذِينَ آمَنُوا بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ". يثبت الله المؤمنين عند الشدائد والموت وفي القبر.', color: '#f39c12' }
+            { question: 'أستاذ، نريد أن نسمع الآية 24', answer: 'قال تعالى: "أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ". شبه الله كلمة التوحيد بشجرة طيبة.', color: '#e74c3c' },
+            { question: 'ماذا تقول الآية 25؟', answer: 'قال تعالى: "تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا". أي تعطي ثمرها في كل وقت.', color: '#3498db' },
+            { question: 'وما معنى الآية 26؟', answer: 'قال تعالى: "وَمَثَلُ كَلِمَةٍ خَبِيثَةٍ كَشَجَرَةٍ خَبِيثَةٍ". الكلمة الخبيثة هي الكفر.', color: '#2ecc71' },
+            { question: 'أستاذ، وضح لنا الآية 27', answer: 'قال تعالى: "يُثَبِّتُ اللَّهُ الَّذِينَ آمَنُوا بِالْقَوْلِ الثَّابِتِ". يثبت الله المؤمنين.', color: '#f39c12' }
         ]
     },
     {
-        id: 'meaning',
-        title: 'المعنى الإجمالي للآيات',
-        boardTitle: 'المعنى الإجمالي',
-        boardSubtitle: 'تفسير الآيات',
+        id: 'meaning', title: 'المعنى الإجمالي للآيات', boardTitle: 'المعنى الإجمالي', boardSubtitle: 'تفسير الآيات',
         teacherIntro: 'الآن نشرح المعنى الإجمالي للآيات. اسألوا عما تريدون فهمه.',
         students: [
-            { question: 'ما معنى كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله"، شبهها الله تعالى بشجرة طيبة، جذرها ثابت في الأرض، وأغصانها ممتدة نحو السماء، وهي كثيرة النفع، تعطي ثمرها في كل وقت بإذن ربها.', color: '#e74c3c' },
-            { question: 'ما معنى الكلمة الخبيثة؟', answer: 'الكلمة الخبيثة هي الكفر والشرك بالله، شبهها الله بشجرة خبيثة لا جذر ثابت لها في الأرض، ولا ثمر طيب تنتجه، كذلك من لا يدين بالدين الحق، لا ثبات له ولا خير فيه.', color: '#3498db' },
-            { question: 'كيف يثبت الله المؤمنين؟', answer: 'يثبت الله المؤمنين بالقول الثابت في الحياة الدنيا عند الشدائد بالشهادة واليقين، وعند الشهوات بترك الإيثار، وعند الموت بحسن الخاتمة، وفي القبر بالقول الصادق.', color: '#2ecc71' },
-            { question: 'ما مصير من بدل نعمة الله كفراً؟', answer: 'أحل قومه دار البوار وهي جهنم يصلونها وبئس القرار، وذلك بسبب تكذيبهم واتخاذهم شركاء لله في العبادة.', color: '#f39c12' }
+            { question: 'ما معنى كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله"، شبهها الله تعالى بشجرة طيبة، جذرها ثابت في الأرض.', color: '#e74c3c' },
+            { question: 'ما معنى الكلمة الخبيثة؟', answer: 'الكلمة الخبيثة هي الكفر والشرك بالله، شبهها الله بشجرة خبيثة لا جذر ثابت لها.', color: '#3498db' },
+            { question: 'كيف يثبت الله المؤمنين؟', answer: 'يثبت الله المؤمنين بالقول الثابت في الحياة الدنيا وعند الموت وفي القبر.', color: '#2ecc71' },
+            { question: 'ما مصير من بدل نعمة الله كفراً؟', answer: 'أحل قومه دار البوار وهي جهنم يصلونها وبئس القرار.', color: '#f39c12' }
         ]
     },
     {
-        id: 'words',
-        title: 'معاني الكلمات',
-        boardTitle: 'معاني الكلمات',
-        boardSubtitle: 'المفردات الغريبة',
+        id: 'words', title: 'معاني الكلمات', boardTitle: 'معاني الكلمات', boardSubtitle: 'المفردات الغريبة',
         teacherIntro: 'الآن نتعلم معاني الكلمات الغريبة في الآيات. اسألوا عن أي كلمة.',
         students: [
-            { question: 'ما معنى "كلمة طيبة"؟', answer: 'كلمة طيبة: هي كلمة التوحيد "لا إله إلا الله"، وهي أصل الإيمان وأساسه.', color: '#e74c3c' },
-            { question: 'ما معنى "أُكُلها"؟', answer: 'أُكُلها: أي ثمرها وفائدتها. والمؤمن الذي يقول لا إله إلا الله تظهر آثار التوحيد على جوارحه.', color: '#3498db' },
-            { question: 'ما معنى "اجتُثّت"؟', answer: 'اجتُثّت: أي قُطعت من أصلها واستُؤصلت. فكذلك الكافر لا أصل له ولا ثبات.', color: '#2ecc71' },
-            { question: 'ما معنى "دار البوار"؟', answer: 'دار البوار: أي دار الهلاك والخسران، وهي جهنم. والبوار: الهلاك.', color: '#f39c12' },
-            { question: 'ما معنى "أنداداً"؟', answer: 'أنداداً: أي شركاء وأمثالاً. وجعلوا لله أنداداً أي اتخذوا معه آلهة أخرى.', color: '#9b59b6' },
-            { question: 'ما معنى "خلال"؟', answer: 'خلال: أي مخاللة ومصادقة. يوم لا بيع فيه ولا خلال، أي لا تنفع فيه فدية ولا صداقة.', color: '#1abc9c' }
+            { question: 'ما معنى "كلمة طيبة"؟', answer: 'كلمة طيبة: هي كلمة التوحيد "لا إله إلا الله".', color: '#e74c3c' },
+            { question: 'ما معنى "أُكُلها"؟', answer: 'أُكُلها: أي ثمرها وفائدتها.', color: '#3498db' },
+            { question: 'ما معنى "اجتُثّت"؟', answer: 'اجتُثّت: أي قُطعت من أصلها واستُؤصلت.', color: '#2ecc71' },
+            { question: 'ما معنى "دار البوار"؟', answer: 'دار البوار: أي دار الهلاك والخسران، وهي جهنم.', color: '#f39c12' },
+            { question: 'ما معنى "أنداداً"؟', answer: 'أنداداً: أي شركاء وأمثالاً.', color: '#9b59b6' },
+            { question: 'ما معنى "خلال"؟', answer: 'خلال: أي مخاللة ومصادقة.', color: '#1abc9c' }
         ]
     },
     {
-        id: 'benefits',
-        title: 'فوائد وأحكام',
-        boardTitle: 'فوائد وأحكام',
-        boardSubtitle: 'من الآيات المقررة',
+        id: 'benefits', title: 'فوائد وأحكام', boardTitle: 'فوائد وأحكام', boardSubtitle: 'من الآيات المقررة',
         teacherIntro: 'ممتاز! الآن ننتقل إلى فوائد وأحكام هذه الآيات. من يريد أن يبدأ؟',
         students: [
-            { question: 'ما فضل كلمة التوحيد؟', answer: 'كلمة التوحيد هي مفتاح الجنة، وموجبة الفوز بالشفاعة العظمى يوم القيامة. قال ﷺ: "أسعد الناس بشفاعتي يوم القيامة من قال: لا إله إلا الله، خالصاً من قلبه أو نفسه" رواه البخاري.', color: '#e74c3c' },
-            { question: 'ما أهمية الشهادة في الإسلام؟', answer: 'الشهادة لا تُقبل إلا بأركانها وشروطها. الركنان: الإقرار باللسان، والاعتقاد بالقلب. والشروط سبعة: العلم، واليقين، والقبول، والانقياد، والصدق، والإخلاص، والمحبة.', color: '#3498db' },
-            { question: 'ما معنى الثبات على الدين؟', answer: 'الثبات على الدين هو السعادة والنجاح في الدنيا والآخرة. كان أكثر دعاء النبي ﷺ: "يا مقلب القلوب ثبت قلبي على دينك" رواه الترمذي.', color: '#2ecc71' },
-            { question: 'ما حكم فتنة القبر وعذابه؟', answer: 'فتنة القبر وعذابه ونعيمه حق ثابت. أوصى النبي ﷺ بالاستعاذة منها في التشهد الأخير: "اللهم إني أعوذ بك من عذاب جهنم، ومن عذاب القبر..." رواه مسلم.', color: '#f39c12' },
-            { question: 'ما الحكمة من المبادرة بالأعمال الصالحة؟', answer: 'يجب المبادرة بالأعمال الصالحة واغتنام الوقت، ومن أعظمها الصلاة والصدقة، فقد قرنهما الله في الآية: "يقيموا الصلاة وينفقوا مما رزقناهم".', color: '#9b59b6' }
+            { question: 'ما فضل كلمة التوحيد؟', answer: 'كلمة التوحيد هي مفتاح الجنة، وموجبة الفوز بالشفاعة العظمى يوم القيامة.', color: '#e74c3c' },
+            { question: 'ما أهمية الشهادة في الإسلام؟', answer: 'الشهادة لا تُقبل إلا بأركانها وشروطها السبعة.', color: '#3498db' },
+            { question: 'ما معنى الثبات على الدين؟', answer: 'الثبات على الدين هو السعادة والنجاح في الدنيا والآخرة.', color: '#2ecc71' },
+            { question: 'ما حكم فتنة القبر وعذابه؟', answer: 'فتنة القبر وعذابه ونعيمه حق ثابت.', color: '#f39c12' },
+            { question: 'ما الحكمة من المبادرة بالأعمال الصالحة؟', answer: 'يجب المبادرة بالأعمال الصالحة واغتنام الوقت.', color: '#9b59b6' }
         ]
     },
     {
-        id: 'think',
-        title: 'فكّر',
-        boardTitle: 'فكّر',
-        boardSubtitle: 'تأمل واستنتج',
+        id: 'think', title: 'فكّر', boardTitle: 'فكّر', boardSubtitle: 'تأمل واستنتج',
         teacherIntro: 'الآن ننتقل إلى مرحلة التفكير والتأمل. هل أنتم مستعدون لتحدي العقل؟',
         students: [
-            { question: 'متى يكون الإنفاق في العلن أفضل؟', answer: 'يكون الإنفاق في العلن أفضل عندما يكون فيه اقتداء بالناس وتشجيعهم على الخير، أو عندما يكون واجباً معلوماً كالزكاة، أو عندما يحتاج الأمر لإعلان التبرع لتحفيز الآخرين.', color: '#e74c3c' },
-            { question: 'لماذا ذكر الله السر والعلانية معاً؟', answer: 'لأن الإخلاص مطلوب في الحالتين، والسر أفضل للرياء، والعلانية أفضل للقدوة. والمؤمن يجمع بينهما حسب المصلحة.', color: '#3498db' },
-            { question: 'ما العلاقة بين الصلاة والإنفاق؟', answer: 'الصلاة حق الله، والإنفاق حق الخلق. ومن أقام الصلاة وأنفق فقد جمع بين حقي الله والعباد، وهذا كمال الإيمان.', color: '#2ecc71' },
-            { question: 'كيف نغتنم وقتنا فيما ينفع؟', answer: 'بالعلم النافع، والعمل الصالح، وبر الوالدين، وصلة الأرحام، وقراءة القرآن، والذكر، والدعاء، والإحسان للخلق.', color: '#f39c12' }
+            { question: 'متى يكون الإنفاق في العلن أفضل؟', answer: 'عندما يكون فيه اقتداء بالناس وتشجيعهم على الخير.', color: '#e74c3c' },
+            { question: 'لماذا ذكر الله السر والعلانية معاً؟', answer: 'لأن الإخلاص مطلوب في الحالتين.', color: '#3498db' },
+            { question: 'ما العلاقة بين الصلاة والإنفاق؟', answer: 'الصلاة حق الله، والإنفاق حق الخلق.', color: '#2ecc71' },
+            { question: 'كيف نغتنم وقتنا فيما ينفع؟', answer: 'بالعلم النافع، والعمل الصالح، وبر الوالدين.', color: '#f39c12' }
         ]
     },
     {
-        id: 'connect',
-        title: 'أربط',
-        boardTitle: 'أربط',
-        boardSubtitle: 'القرآن بالقرآن والسنة',
+        id: 'connect', title: 'أربط', boardTitle: 'أربط', boardSubtitle: 'القرآن بالقرآن والسنة',
         teacherIntro: 'الآن نربط ما تعلمناه بآيات وأحاديث أخرى. من يستطيع أن يربط؟',
         students: [
-            { question: 'اربط آية آدم بقصة إبراهيم', answer: 'كلا القصتين تدلان على نعمة الله التي يجب شكرها. آدم أسكنه الله الجنة فكفر إبليس، وإبراهيم أنعم عليه بالنبوة فكفر قومه. والشكر واجب في الحالتين.', color: '#e74c3c' },
-            { question: 'اربط حديث القبر بالآية 27', answer: 'قال ﷺ: "المسلم إذا سئل في القبر يشهد أن لا إله إلا الله" وهذا تفسير لقوله تعالى: "يثبت الله الذين آمنوا بالقول الثابت" في القبر.', color: '#3498db' },
-            { question: 'ما علاقة سورة الفاتحة بهذا الدرس؟', answer: 'الفاتحة فيها التوحيد "إياك نعبد وإياك نستعين" وهو أصل كلمة التوحيد الطيبة التي شبهها الله بالشجرة الطيبة.', color: '#2ecc71' },
-            { question: 'كيف نربط الصلاة بالإنفاق؟', answer: 'الصلاة والإنفاق ركنان من أركان الإسلام، وجمعهما في آية واحدة يدل على أن الدين يقوم على حق الله وحق الخلق.', color: '#f39c12' }
+            { question: 'اربط آية آدم بقصة إبراهيم', answer: 'كلا القصتين تدلان على نعمة الله التي يجب شكرها.', color: '#e74c3c' },
+            { question: 'اربط حديث القبر بالآية 27', answer: 'المسلم إذا سئل في القبر يشهد أن لا إله إلا الله.', color: '#3498db' },
+            { question: 'ما علاقة سورة الفاتحة بهذا الدرس؟', answer: 'الفاتحة فيها التوحيد وهو أصل كلمة التوحيد الطيبة.', color: '#2ecc71' },
+            { question: 'كيف نربط الصلاة بالإنفاق؟', answer: 'الصلاة والإنفاق ركنان من أركان الإسلام.', color: '#f39c12' }
         ]
     },
     {
-        id: 'tech',
-        title: 'استثمر التقنية',
-        boardTitle: 'استثمر التقنية',
-        boardSubtitle: 'التفسير الرقمي',
-        teacherIntro: 'الآن نتعلم كيف نستخدم التقنية في فهم القرآن. يمكنكم استخدام مواقع التفسير المعتمدة.',
+        id: 'tech', title: 'استثمر التقنية', boardTitle: 'استثمر التقنية', boardSubtitle: 'التفسير الرقمي',
+        teacherIntro: 'الآن نتعلم كيف نستخدم التقنية في فهم القرآن.',
         students: [
-            { question: 'ما هي مواقع التفسير الموثوقة؟', answer: 'من المواقع الموثوقة: موقع التفسير الميسر، وموقع تفسير السعدي، وموقع الدرر السنية. ويمكنكم استخدامها لفهم آيات القرآن.', color: '#e74c3c' },
-            { question: 'كيف نستفيد من التقنية في الحفظ؟', answer: 'يمكن استخدام التطبيقات الصوتية للاستماع للتلاوة، وتطبيقات الحفظ للمراجعة، والمواقع الإلكترونية للبحث عن معاني الكلمات.', color: '#3498db' },
-            { question: 'ما فوائد استخدام التطبيقات القرآنية؟', answer: 'تساعد على التلاوة الصحيحة، والحفظ المتقن، وفهم المعاني، ومراجعة ما تم حفظه، والاستماع للقراء المشهورين.', color: '#2ecc71' },
-            { question: 'كيف نتحقق من صحة المعلومات؟', answer: 'بالرجوع إلى المصادر المعتمدة مثل كتب التفسير المعتبرة، والسؤال عن أهل العلم، وعدم الأخذ من مصادر غير موثوقة.', color: '#f39c12' }
+            { question: 'ما هي مواقع التفسير الموثوقة؟', answer: 'موقع التفسير الميسر، وتفسير السعدي، والدرر السنية.', color: '#e74c3c' },
+            { question: 'كيف نستفيد من التقنية في الحفظ؟', answer: 'بالتطبيقات الصوتية وتطبيقات الحفظ.', color: '#3498db' },
+            { question: 'ما فوائد التطبيقات القرآنية؟', answer: 'تساعد على التلاوة الصحيحة والحفظ المتقن.', color: '#2ecc71' },
+            { question: 'كيف نتحقق من صحة المعلومات؟', answer: 'بالرجوع إلى المصادر المعتمدة وأهل العلم.', color: '#f39c12' }
         ]
     },
     {
-        id: 'recitation',
-        title: 'أجود تلاوتي',
-        boardTitle: 'أجود تلاوتي',
-        boardSubtitle: 'التجويد والتلاوة',
-        teacherIntro: 'الآن نتعلم أحكام التجويد في الآيات. استمعوا للتلاوة الصحيحة.',
+        id: 'recitation', title: 'أجود تلاوتي', boardTitle: 'أجود تلاوتي', boardSubtitle: 'التجويد والتلاوة',
+        teacherIntro: 'الآن نتعلم أحكام التجويد في الآيات.',
         students: [
-            { question: 'ما حكم المد في "طَيِّبَةً"؟', answer: 'في كلمة "طيبة" مد طبيعي مقداره حركتان، لأن الياء ساكنة وما قبلها مكسور.', color: '#e74c3c' },
-            { question: 'ما حكم الغنة في "مِن فَوْقِ"؟', answer: 'في "من فوق" غنة بمقدار حركتين لأن النون ساكنة وجاء بعدها الفاء.', color: '#3498db' },
-            { question: 'ما حكم الإدغام في "مِن قَرَارٍ"؟', answer: 'في "من قرار" إدغام النون في القاف بغنة، لأن النون الساكنة جاء بعدها حرف القاف.', color: '#2ecc71' },
-            { question: 'كيف نطبق أحكام التجويد؟', answer: 'بالتدريب المستمر، والاستماع للقراء المتقنين، وتعلم مخارج الحروف وصفاتها، والمراجعة الدائمة.', color: '#f39c12' }
+            { question: 'ما حكم المد في "طَيِّبَةً"؟', answer: 'مد طبيعي مقداره حركتان.', color: '#e74c3c' },
+            { question: 'ما حكم الغنة في "مِن فَوْقِ"؟', answer: 'غنة بمقدار حركتين.', color: '#3498db' },
+            { question: 'ما حكم الإدغام في "مِن قَرَارٍ"؟', answer: 'إدغام النون في القاف بغنة.', color: '#2ecc71' },
+            { question: 'كيف نطبق أحكام التجويد؟', answer: 'بالتدريب المستمر والاستماع للقراء.', color: '#f39c12' }
         ]
     },
     {
-        id: 'assessment',
-        title: 'تقويم - أتأمل وأجيب',
-        boardTitle: 'تقويم',
-        boardSubtitle: 'اختبر معلوماتك',
-        teacherIntro: 'الآن حان وقت التقويم! لنرى من استفاد من الدرس. من يريد أن يجيب؟',
+        id: 'assessment', title: 'تقويم - أتأمل وأجيب', boardTitle: 'تقويم', boardSubtitle: 'اختبر معلوماتك',
+        teacherIntro: 'الآن حان وقت التقويم! لنرى من استفاد من الدرس.',
         students: [
-            { question: 'ما هي كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله"، وهي أصل الإيمان وأساسه، ومن قالها مخلصاً دخل الجنة.', color: '#e74c3c' },
-            { question: 'ما معنى "أصلها ثابت وفرعها في السماء"؟', answer: 'أصلها ثابت في قلب المؤمن بالإيمان، وفرعها في السماء بأعمالها الصالحة التي تصعد إلى الله تعالى.', color: '#3498db' },
-            { question: 'ما حكم من بدل نعمة الله كفراً؟', answer: 'من كفر نعمة الله واستبدل بها الكفر، فقد أحل قومه دار البوار وهي جهنم، وبئس المصير.', color: '#2ecc71' },
-            { question: 'ما هي العبادة التي قرن الله بها الإنفاق؟', answer: 'الصلاة، قال تعالى: "يقيموا الصلاة وينفقوا مما رزقناهم". فالصلاة والإنفاق عماد الدين.', color: '#f39c12' },
-            { question: 'ما أكثر دعاء النبي ﷺ؟', answer: 'كان أكثر دعاءه: "يا مقلب القلوب ثبت قلبي على دينك" رواه الترمذي، وهذا دعاء الثبات على الإيمان.', color: '#9b59b6' },
-            { question: 'ما الواجب علينا بعد دراسة هذا الدرس؟', answer: 'الواجب: تلاوة الآيات وحفظها، والعمل بما فيها، والدعاء بالثبات، وشكر نعم الله، والبعد عن الكفران.', color: '#1abc9c' }
+            { question: 'ما هي كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله".', color: '#e74c3c' },
+            { question: 'ما معنى "أصلها ثابت"؟', answer: 'أصلها ثابت في قلب المؤمن بالإيمان.', color: '#3498db' },
+            { question: 'ما حكم من بدل نعمة الله كفراً؟', answer: 'أحل قومه دار البوار وهي جهنم.', color: '#2ecc71' },
+            { question: 'ما العبادة التي قرن الله بها الإنفاق؟', answer: 'الصلاة، قال تعالى: "يقيموا الصلاة وينفقوا".', color: '#f39c12' },
+            { question: 'ما أكثر دعاء النبي ﷺ؟', answer: '"يا مقلب القلوب ثبت قلبي على دينك".', color: '#9b59b6' },
+            { question: 'ما الواجب علينا بعد الدرس؟', answer: 'تلاوة الآيات وحفظها والعمل بما فيها.', color: '#1abc9c' }
         ]
     }
 ];
@@ -1692,19 +1635,16 @@ let soundEnabled = false;
 let currentSpeakCallback = null;
 let speakTimeout = null;
 
-// ============ SOUND TOGGLE ============
 function toggleSound() {
     const btn = document.getElementById('soundToggleBtn');
     const dot = document.getElementById('soundDot');
     const statusText = document.getElementById('soundStatusText');
     
     if (!soundEnabled) {
-        // Try to enable sound
         if ('speechSynthesis' in window) {
             const testUtter = new SpeechSynthesisUtterance('تم');
             testUtter.lang = 'ar-SA';
             testUtter.volume = 0.1;
-            
             const voices = speechSynthesis.getVoices();
             const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
             if (arabicVoice) testUtter.voice = arabicVoice;
@@ -1718,17 +1658,12 @@ function toggleSound() {
                 showNotification('✅ تم تفعيل الصوت');
                 loadVoices();
             };
-            
-            testUtter.onerror = () => {
-                showNotification('⚠️ لم يتم تفعيل الصوت');
-            };
-            
+            testUtter.onerror = () => showNotification('⚠️ لم يتم تفعيل الصوت');
             speechSynthesis.speak(testUtter);
         } else {
             showNotification('⚠️ متصفحك لا يدعم الصوت');
         }
     } else {
-        // Disable sound
         soundEnabled = false;
         btn.textContent = '🔇';
         btn.classList.remove('active');
@@ -1746,62 +1681,37 @@ function showNotification(message) {
     setTimeout(() => notif.classList.remove('show'), 2500);
 }
 
-// ============ STOP ALL SOUND ============
 function stopAllSound() {
-    // Stop speech synthesis
-    if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-    }
-    
-    // Stop audio
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
     stopAudio();
-    
-    // Clear timeouts
-    if (speakTimeout) {
-        clearTimeout(speakTimeout);
-        speakTimeout = null;
-    }
-    
-    // Reset states
+    if (speakTimeout) { clearTimeout(speakTimeout); speakTimeout = null; }
     isSpeaking = false;
     currentSpeakCallback = null;
-    
-    // Hide stop button
     document.getElementById('stopSoundBtn').classList.remove('show');
-    
-    // Hide speaker indicator
     hideSpeakerIndicator();
-    
-    // Remove speaking animations
     document.getElementById('teacherFigure').classList.remove('teacher-speaking');
-    document.querySelectorAll('.student-question.speaking').forEach(el => {
-        el.classList.remove('speaking');
-    });
-    
+    document.querySelectorAll('.student-question-new.speaking').forEach(el => el.classList.remove('speaking'));
     showNotification('⏹️ تم إيقاف الصوت');
 }
 
-// ============ INITIALIZATION ============
 function init() {
     createParticles();
     loadVoices();
-    
-    // Allow sound toggle on first interaction
     document.addEventListener('click', () => {
-        if ('speechSynthesis' in window && speechSynthesis.getVoices().length === 0) {
-            speechSynthesis.getVoices();
-        }
+        if ('speechSynthesis' in window && speechSynthesis.getVoices().length === 0) speechSynthesis.getVoices();
     }, { once: true });
 }
 
 function createParticles() {
     const container = document.getElementById('particles');
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 60; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         p.style.left = Math.random() * 100 + '%';
-        p.style.animationDelay = Math.random() * 15 + 's';
-        p.style.animationDuration = (10 + Math.random() * 10) + 's';
+        p.style.animationDelay = Math.random() * 18 + 's';
+        p.style.animationDuration = (12 + Math.random() * 12) + 's';
+        p.style.width = (4 + Math.random() * 4) + 'px';
+        p.style.height = p.style.width;
         container.appendChild(p);
     }
 }
@@ -1809,7 +1719,6 @@ function createParticles() {
 function loadVoices() {
     const voices = speechSynthesis.getVoices();
     if (voices.length === 0) return;
-    
     const voicePriority = [
         v => v.name === 'Google العربية' || v.name === 'Google Arabic',
         v => v.lang === 'ar-SA' && v.name.includes('Google'),
@@ -1821,52 +1730,32 @@ function loadVoices() {
         v => v.lang.startsWith('ar') && v.name.includes('Male'),
         v => v.lang.startsWith('ar')
     ];
-    
     for (const check of voicePriority) {
         const found = voices.find(v => check(v) && (!v.name.includes('Female') || v.name.includes('Naayf')));
         if (found) { teacherVoice = found; break; }
     }
-    
     for (const check of voicePriority) {
-        const found = voices.find(v => check(v) && (v.name.includes('Female') || v.name.includes('Hoda') || v.name.includes('Zira')));
+        const found = voices.find(v => check(v) && (v.name.includes('Female') || v.name.includes('Hoda')));
         if (found) { studentVoice = found; break; }
     }
-    
     if (!teacherVoice) teacherVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
     if (!studentVoice) studentVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
 }
 
-if (speechSynthesis.onvoiceschanged !== undefined) {
-    speechSynthesis.onvoiceschanged = loadVoices;
-}
+if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = loadVoices;
 
-// ============ SPEAK FUNCTION (Non-blocking) ============
 function speak(text, isTeacher = true, callback) {
-    // Always call callback after a delay if sound is not enabled
     if (!soundEnabled) {
-        if (callback) {
-            speakTimeout = setTimeout(callback, 1500);
-        }
+        if (callback) speakTimeout = setTimeout(callback, 1500);
         return;
     }
-    
     if (!('speechSynthesis' in window)) {
-        if (callback) {
-            speakTimeout = setTimeout(callback, 1500);
-        }
+        if (callback) speakTimeout = setTimeout(callback, 1500);
         return;
     }
-    
-    // Cancel any ongoing speech
     speechSynthesis.cancel();
-    if (speakTimeout) {
-        clearTimeout(speakTimeout);
-    }
-    
-    // Store callback
+    if (speakTimeout) clearTimeout(speakTimeout);
     currentSpeakCallback = callback;
-    
-    // Show stop button
     document.getElementById('stopSoundBtn').classList.add('show');
     
     const sentences = text.split(/(?<=[.!?،۔])\s+/);
@@ -1875,7 +1764,6 @@ function speak(text, isTeacher = true, callback) {
     
     function speakNext() {
         if (cancelled) return;
-        
         if (currentIndex >= sentences.length) {
             hideSpeakerIndicator();
             isSpeaking = false;
@@ -1884,39 +1772,37 @@ function speak(text, isTeacher = true, callback) {
             if (callback) callback();
             return;
         }
-        
         const sentence = sentences[currentIndex].trim();
-        if (!sentence) {
-            currentIndex++;
-            speakNext();
-            return;
-        }
+        if (!sentence) { currentIndex++; speakNext(); return; }
         
         const utter = new SpeechSynthesisUtterance(sentence);
         utter.lang = 'ar-SA';
-        
-        if (isTeacher) {
-            utter.rate = 0.92;
-            utter.pitch = 0.9;
-            utter.volume = 1;
-        } else {
-            utter.rate = 0.95;
-            utter.pitch = 1.1;
-            utter.volume = 1;
-        }
-        
+        if (isTeacher) { utter.rate = 0.92; utter.pitch = 0.9; }
+        else { utter.rate = 0.95; utter.pitch = 1.1; }
+        utter.volume = 1;
         if (isTeacher && teacherVoice) utter.voice = teacherVoice;
         else if (!isTeacher && studentVoice) utter.voice = studentVoice;
         
         showSpeakerIndicator(isTeacher);
         isSpeaking = true;
         
+        // Animate teacher mouth
+        if (isTeacher) {
+            const mouth = document.getElementById('teacherMouth');
+            if (mouth) {
+                mouth.setAttribute('d', 'M 82 118 Q 90 125 98 118 Q 90 122 82 118');
+            }
+        }
+        
         utter.onend = () => {
             if (cancelled) return;
+            if (isTeacher) {
+                const mouth = document.getElementById('teacherMouth');
+                if (mouth) mouth.setAttribute('d', 'M 82 118 Q 90 122 98 118');
+            }
             currentIndex++;
             speakTimeout = setTimeout(speakNext, 200);
         };
-        
         utter.onerror = () => {
             cancelled = true;
             hideSpeakerIndicator();
@@ -1925,10 +1811,8 @@ function speak(text, isTeacher = true, callback) {
             currentSpeakCallback = null;
             if (callback) callback();
         };
-        
         speechSynthesis.speak(utter);
     }
-    
     speakNext();
 }
 
@@ -1936,54 +1820,37 @@ function showSpeakerIndicator(isTeacher) {
     const indicator = document.getElementById('speakerIndicator');
     const avatar = document.getElementById('speakerAvatar');
     const name = document.getElementById('speakerName');
-    
     avatar.textContent = isTeacher ? '👨‍🏫' : '👨‍🎓';
     avatar.className = 'speaker-avatar ' + (isTeacher ? 'teacher' : 'student');
     name.textContent = isTeacher ? 'المعلم يتحدث...' : 'الطالب يسأل...';
-    
     indicator.classList.add('show');
-    
-    if (isTeacher) {
-        document.getElementById('teacherFigure').classList.add('teacher-speaking');
-    }
 }
 
 function hideSpeakerIndicator() {
     document.getElementById('speakerIndicator').classList.remove('show');
-    document.getElementById('teacherFigure').classList.remove('teacher-speaking');
 }
 
 function toggleMenu() {
-    const toggle = document.getElementById('menuToggle');
-    const dropdown = document.getElementById('menuDropdown');
-    toggle.classList.toggle('active');
-    dropdown.classList.toggle('open');
+    document.getElementById('menuToggle').classList.toggle('active');
+    document.getElementById('menuDropdown').classList.toggle('open');
 }
 
 function goToSection(sectionId) {
     const index = sections.findIndex(s => s.id === sectionId);
     if (index === -1) return;
-    
-    // Stop any ongoing sound first
     stopAllSound();
-    
     toggleMenu();
-    
     const landing = document.getElementById('landing');
     const classroom = document.getElementById('classroom');
     const questionScreen = document.getElementById('questionScreen');
-    
     stopAudio();
-    
     if (!landing.classList.contains('hidden')) {
         currentSection = index;
         enterStudentView();
     } else if (questionScreen.classList.contains('active')) {
         questionScreen.classList.remove('active');
         currentSection = index;
-        setTimeout(() => {
-            loadSection(index);
-        }, 400);
+        setTimeout(() => loadSection(index), 400);
     } else if (classroom.classList.contains('active')) {
         currentSection = index;
         loadSection(index);
@@ -2001,19 +1868,15 @@ function enterStudentView() {
 function loadSection(index) {
     currentSection = index;
     const section = sections[index];
-    
     document.getElementById('boardTitle').textContent = section.boardTitle;
     document.getElementById('boardSubtitle').textContent = section.boardSubtitle;
-    
     renderStudents(section);
-    
     const speech = document.getElementById('teacherSpeech');
     speech.classList.remove('show');
-    
     setTimeout(() => {
         showTeacherQuestion(section.teacherIntro, () => {
             setTimeout(() => {
-                document.querySelectorAll('.student-question').forEach((q, i) => {
+                document.querySelectorAll('.student-question-new').forEach((q, i) => {
                     setTimeout(() => q.classList.add('show'), i * 250);
                 });
             }, 400);
@@ -2024,52 +1887,103 @@ function loadSection(index) {
 function renderStudents(section) {
     const grid = document.getElementById('studentsGrid');
     grid.innerHTML = '';
-    
     const count = section.students.length;
-    
     let layoutClass = 'layout-8';
     if (count <= 4) layoutClass = 'layout-4';
     else if (count <= 5) layoutClass = 'layout-5';
     else if (count <= 6) layoutClass = 'layout-6';
+    grid.className = 'students-grid-new ' + layoutClass;
     
-    grid.className = 'students-grid ' + layoutClass;
+    const hairColors = ['#2c1810', '#4a2e14', '#1a0f08', '#3d2817', '#5d3a1a', '#6b4423', '#8b4513', '#3d2817'];
+    const shirtColors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#16a085'];
     
     section.students.forEach((student, i) => {
         const desk = document.createElement('div');
-        desk.className = 'student-desk';
+        desk.className = 'student-desk-new';
         
         const question = document.createElement('div');
-        question.className = 'student-question';
+        question.className = 'student-question-new';
         question.textContent = student.question;
         question.style.background = `linear-gradient(135deg, ${student.color}, ${adjustColor(student.color, 30)})`;
         question.onclick = () => selectStudent(i);
         
-        const figure = document.createElement('div');
-        figure.className = 'student-figure';
-        figure.style.animationDelay = (i * 0.2) + 's';
+        const svgContainer = document.createElement('div');
+        svgContainer.className = 'student-svg-container';
+        svgContainer.style.animationDelay = (i * 0.3) + 's';
         
-        const head = document.createElement('div');
-        head.className = 'student-head';
-        const hair = document.createElement('div');
-        hair.className = 'student-hair';
-        hair.style.background = ['#2c1810', '#4a2e14', '#1a0f08', '#3d2817', '#5d3a1a', '#6b4423'][i % 6];
-        const eyes = document.createElement('div');
-        eyes.className = 'student-eyes';
-        eyes.innerHTML = '<div class="student-eye"></div><div class="student-eye"></div>';
-        head.appendChild(hair);
-        head.appendChild(eyes);
+        const hairColor = hairColors[i % hairColors.length];
+        const shirtColor = shirtColors[i % shirtColors.length];
+        const isGirl = i % 3 === 0;
         
-        const body = document.createElement('div');
-        body.className = 'student-body';
-        body.style.background = `linear-gradient(180deg, ${student.color}, ${adjustColor(student.color, -30)})`;
+        svgContainer.innerHTML = `
+            <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- Shadow -->
+                <ellipse cx="50" cy="135" rx="35" ry="4" fill="rgba(0,0,0,0.2)"/>
+                
+                <!-- Body/Shirt -->
+                <path d="M 25 80 Q 25 75 30 72 L 70 72 Q 75 75 75 80 L 78 130 Q 78 133 75 133 L 25 133 Q 22 133 22 130 Z" 
+                      fill="${shirtColor}" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+                
+                <!-- Shirt collar -->
+                <path d="M 40 72 L 50 80 L 60 72" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+                
+                ${isGirl ? `
+                <!-- Hijab -->
+                <path d="M 28 55 Q 28 30 50 25 Q 72 30 72 55 L 72 75 Q 72 78 70 78 L 30 78 Q 28 78 28 75 Z" 
+                      fill="${adjustColor(student.color, -20)}" opacity="0.9"/>
+                <path d="M 30 75 Q 30 85 50 88 Q 70 85 70 75" fill="${adjustColor(student.color, -20)}" opacity="0.9"/>
+                ` : ''}
+                
+                <!-- Head -->
+                <ellipse cx="50" cy="50" rx="22" ry="25" fill="url(#skinGrad${i})"/>
+                
+                ${!isGirl ? `
+                <!-- Hair (Boys) -->
+                <path d="M 28 45 Q 28 25 50 22 Q 72 25 72 45 Q 72 50 70 52 L 30 52 Q 28 50 28 45 Z" 
+                      fill="${hairColor}"/>
+                ` : `
+                <!-- Hair under hijab -->
+                <path d="M 32 48 Q 32 32 50 28 Q 68 32 68 48" fill="${hairColor}" opacity="0.3"/>
+                `}
+                
+                <!-- Eyes -->
+                <ellipse cx="42" cy="52" rx="3" ry="3.5" fill="white"/>
+                <ellipse cx="58" cy="52" rx="3" ry="3.5" fill="white"/>
+                <circle cx="43" cy="53" r="2" fill="#1a1a1a">
+                    <animate attributeName="cx" values="43;44;42;43" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="59" cy="53" r="2" fill="#1a1a1a">
+                    <animate attributeName="cx" values="59;60;58;59" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                
+                <!-- Eyebrows -->
+                <path d="M 38 46 Q 42 44 46 46" stroke="${hairColor}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <path d="M 54 46 Q 58 44 62 46" stroke="${hairColor}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                
+                <!-- Nose -->
+                <path d="M 50 55 Q 49 58 50 60 Q 51 58 50 55" fill="#d49a78" opacity="0.6"/>
+                
+                <!-- Mouth -->
+                <path d="M 45 65 Q 50 68 55 65" stroke="#8b4513" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                
+                <!-- Cheeks (blush) -->
+                <circle cx="38" cy="60" r="3" fill="#ffb6c1" opacity="0.3"/>
+                <circle cx="62" cy="60" r="3" fill="#ffb6c1" opacity="0.3"/>
+                
+                <defs>
+                    <linearGradient id="skinGrad${i}" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f0c9a8"/>
+                        <stop offset="100%" style="stop-color:#d49a78"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+        `;
         
         const deskSurface = document.createElement('div');
-        deskSurface.className = 'student-desk-surface';
+        deskSurface.className = 'student-desk-surface-new';
         
-        figure.appendChild(head);
-        figure.appendChild(body);
         desk.appendChild(question);
-        desk.appendChild(figure);
+        desk.appendChild(svgContainer);
         desk.appendChild(deskSurface);
         grid.appendChild(desk);
     });
@@ -2085,14 +1999,9 @@ function adjustColor(hex, amount) {
 
 function showTeacherQuestion(text, callback) {
     const speech = document.getElementById('teacherSpeech');
-    const teacher = document.getElementById('teacherFigure');
-    
     speech.textContent = text;
     speech.classList.add('show');
-    teacher.classList.add('teacher-speaking');
-    
     speak(text, true, () => {
-        teacher.classList.remove('teacher-speaking');
         setTimeout(() => {
             speech.classList.remove('show');
             if (callback) callback();
@@ -2101,23 +2010,18 @@ function showTeacherQuestion(text, callback) {
 }
 
 function selectStudent(index) {
-    // Stop any ongoing sound
     stopAllSound();
-    
     currentStudent = index;
     const section = sections[currentSection];
     const student = section.students[index];
-    
-    const questionEl = document.querySelectorAll('.student-question')[index];
+    const questionEl = document.querySelectorAll('.student-question-new')[index];
     questionEl.classList.add('speaking');
     
     speak(student.question, false, () => {
         questionEl.classList.remove('speaking');
-        
         document.getElementById('questionText').textContent = student.question;
         document.getElementById('answerTitleText').textContent = 'إجابة المعلم';
         document.getElementById('answerText').textContent = student.answer;
-        
         document.getElementById('questionScreen').classList.add('active');
         document.getElementById('audioPlayer').classList.remove('show');
         document.getElementById('answerDisplay').classList.remove('show');
@@ -2134,26 +2038,19 @@ function backToClassroom() {
 
 function chooseListen() {
     stopAllSound();
-    
     const section = sections[currentSection];
     document.getElementById('verseDisplay').textContent = section.verse || 'بسم الله الرحمن الرحيم';
     document.getElementById('audioPlayer').classList.add('show');
     document.getElementById('choiceButtons').style.display = 'none';
-    
     audioEl.src = section.audioUrl || 'https://everyayah.com/data/Alafasy_128kbps/014024.mp3';
-    
-    setTimeout(() => {
-        toggleAudio();
-    }, 500);
+    setTimeout(() => toggleAudio(), 500);
 }
 
 function chooseExplain() {
     stopAllSound();
-    
     const student = sections[currentSection].students[currentStudent];
     document.getElementById('answerDisplay').classList.add('show');
     document.getElementById('choiceButtons').style.display = 'none';
-    
     speak(student.answer, true, () => {
         setTimeout(() => {
             document.getElementById('nextBtn').style.display = 'inline-block';
@@ -2177,13 +2074,11 @@ function addAskAgainButton() {
 
 function askAgain() {
     stopAllSound();
-    
     const student = sections[currentSection].students[currentStudent];
     document.getElementById('answerDisplay').classList.remove('show');
     document.getElementById('nextBtn').style.display = 'none';
     document.getElementById('askAgainBtn')?.remove();
     document.getElementById('choiceButtons').style.display = 'none';
-    
     speak(student.question, false, () => {
         setTimeout(() => {
             document.getElementById('answerDisplay').classList.add('show');
@@ -2199,7 +2094,6 @@ function askAgain() {
 
 function toggleAudio() {
     const btn = document.getElementById('playBtn');
-    
     if (audioPlaying) {
         audioEl.pause();
         btn.textContent = '▶️';
@@ -2210,9 +2104,7 @@ function toggleAudio() {
             btn.textContent = '⏸️';
             btn.classList.add('playing');
             audioPlaying = true;
-        }).catch(e => {
-            showNotification('⚠️ تعذر تشغيل الصوت');
-        });
+        }).catch(e => showNotification('⚠️ تعذر تشغيل الصوت'));
     }
 }
 
@@ -2221,26 +2113,16 @@ function stopAudio() {
     audioEl.currentTime = 0;
     audioPlaying = false;
     const btn = document.getElementById('playBtn');
-    if (btn) {
-        btn.textContent = '▶️';
-        btn.classList.remove('playing');
-    }
+    if (btn) { btn.textContent = '▶️'; btn.classList.remove('playing'); }
 }
 
 audioEl.addEventListener('ended', () => {
     audioPlaying = false;
     const btn = document.getElementById('playBtn');
-    if (btn) {
-        btn.textContent = '▶️';
-        btn.classList.remove('playing');
-    }
-    
-    setTimeout(() => {
-        document.getElementById('nextBtn').style.display = 'inline-block';
-    }, 1000);
+    if (btn) { btn.textContent = '▶️'; btn.classList.remove('playing'); }
+    setTimeout(() => { document.getElementById('nextBtn').style.display = 'inline-block'; }, 1000);
 });
 
-// Initialize
 init();
 </script>
 </body>
