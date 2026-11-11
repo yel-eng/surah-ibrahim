@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>سورة إبراهيم - عرض تفاعلي تعليمي</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+    --gold: #d4af37;
+    --gold-light: #f4e5a1;
+    --deep-blue: #0a1628;
+    --royal-blue: #1e3a5f;
+    --emerald: #0d7377;
+    --cream: #fdf8ef;
+    --warm: #f5e6d3;
+    --teacher-color: #2c5f7c;
+    --student-color: #c0392b;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--deep-blue);
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+    color: white;
+    position: fixed;
+}
+
+/* ============ TOP MENU ============ */
+.top-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, rgba(10,22,40,0.98) 0%, rgba(10,22,40,0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--gold);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.menu-logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--gold);
+    margin-left: 1rem;
+    white-space: nowrap;
+}
+
+.menu-toggle {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.3s;
+}
+
+.menu-toggle span {
+    width: 20px;
+    height: 2px;
+    background: var(--deep-blue);
+    transition: all 0.3s;
+}
+
+.menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.menu-dropdown {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, rgba(10,22,40,0.98), rgba(10,22,40,0.95));
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--gold);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    z-index: 999;
+}
+
+.menu-dropdown.open {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.menu-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    font-size: 1.05rem;
+}
+
+.menu-item:hover, .menu-item.active {
+    background: rgba(212,175,55,0.15);
+    padding-right: 2rem;
+}
+
+.menu-item-icon {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.menu-item-text {
+    flex: 1;
+}
+
+/* ============ LANDING PAGE ============ */
+.landing {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 70%);
+    z-index: 500;
+    transition: opacity 1s, transform 1s;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.landing.hidden {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.landing-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.landing-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(212,175,55,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(13,115,119,0.15) 0%, transparent 40%);
+    animation: bgPulse 8s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.landing-particles {
+    position: absolute;
+    inset: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: particleFloat 15s infinite linear;
+    opacity: 0.6;
+}
+
+@keyframes particleFloat {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
+}
+
+.landing-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+    padding: 1rem;
+}
+
+.lesson-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--deep-blue);
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+    box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.main-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.8rem;
+    opacity: 0;
+    animation: titleReveal 1.5s ease 0.7s forwards;
+    letter-spacing: 2px;
+}
+
+@keyframes titleReveal {
+    from { opacity: 0; transform: scale(0.8); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+.subtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 0.3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+}
+
+.verse-range {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    color: var(--gold-light);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+}
+
+.view-selector {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+}
+
+.view-card {
+    width: 260px;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.view-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.view-card:hover:not(.disabled)::before { opacity: 1; }
+
+.view-card:hover:not(.disabled) {
+    transform: translateY(-8px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(212,175,55,0.3);
+}
+
+.view-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.view-card.disabled::after {
+    content: 'قريباً';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    background: rgba(0,0,0,0.8);
+    color: var(--gold);
+    padding: 8px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 2px solid var(--gold);
+}
+
+.view-icon {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.view-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--gold-light);
+    margin-bottom: 0.4rem;
+}
+
+.view-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+}
+
+/* ============ CLASSROOM SCENE ============ */
+.classroom {
+    position: fixed;
+    inset: 0;
+    top: 60px;
+    background: linear-gradient(180deg, #3d2817 0%, #2a1810 50%, #1a0f08 100%);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s;
+    overflow: hidden;
+}
+
+.classroom.active {
+    display: block;
+    opacity: 1;
+}
+
+.classroom-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(61,40,23,0.95) 0%, rgba(42,24,16,0.98) 100%);
+}
+
+.classroom-floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: repeating-linear-gradient(
+        90deg,
+        #5d3a1a 0px,
+        #5d3a1a 80px,
+        #4a2e14 80px,
+        #4a2e14 82px
+    );
+    opacity: 0.3;
+}
+
+.blackboard {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    max-width: 700px;
+    height: 32%;
+    background: linear-gradient(180deg, #1a3a2a 0%, #0f2818 100%);
+    border: 12px solid #5d3a1a;
+    border-radius: 8px;
+    box-shadow: 
+        inset 0 0 40px rgba(0,0,0,0.6),
+        0 15px 40px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.blackboard::before {
+    content: '';
+    position: absolute;
+    bottom: -25px;
+    left: 10%;
+    right: 10%;
+    height: 15px;
+    background: linear-gradient(180deg, #8b6f47, #5d3a1a);
+    border-radius: 3px;
+}
+
+.blackboard-content {
+    text-align: center;
+    color: #f4e5a1;
+    font-family: 'Amiri', serif;
+}
+
+.blackboard-title {
+    font-size: clamp(1.3rem, 4vw, 2.2rem);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 15px rgba(244,229,161,0.5);
+}
+
+.blackboard-subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    opacity: 0.9;
+}
+
+/* Teacher */
+.teacher-container {
+    position: absolute;
+    bottom: 32%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teacher-figure {
+    position: relative;
+    width: 140px;
+    height: 220px;
+    animation: teacherBreathe 4s ease-in-out infinite;
+}
+
+@keyframes teacherBreathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.teacher-head {
+    width: 80px;
+    height: 90px;
+    background: linear-gradient(180deg, #e8b896 0%, #d49a78 100%);
+    border-radius: 50% 50% 45% 45%;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.teacher-beard {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 35px;
+    background: linear-gradient(180deg, #4a3728, #2c1810);
+    border-radius: 0 0 50% 50%;
+}
+
+.teacher-ghutra {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 40px;
+    background: white;
+    border-radius: 50% 50% 30% 30%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.teacher-ghutra::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 8px;
+    background: #c0392b;
+    border-radius: 4px;
+}
+
+.teacher-eyes {
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.teacher-eye {
+    width: 10px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.teacher-eye::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 7px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    animation: eyeMove 5s ease-in-out infinite;
+}
+
+@keyframes eyeMove {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(2px, -1px); }
+    50% { transform: translate(-2px, 0); }
+    75% { transform: translate(1px, 1px); }
+}
+
+.teacher-mouth {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 6px;
+    background: #8b4513;
+    border-radius: 0 0 12px 12px;
+    transition: all 0.15s;
+    z-index: 5;
+}
+
+.teacher-speaking .teacher-mouth {
+    animation: teacherTalk 0.25s ease-in-out infinite;
+}
+
+@keyframes teacherTalk {
+    0%, 100% { height: 6px; width: 20px; border-radius: 0 0 12px 12px; }
+    50% { height: 12px; width: 16px; border-radius: 50%; }
+}
+
+.teacher-body {
+    width: 110px;
+    height: 120px;
+    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    margin: -8px auto 0;
+    border-radius: 50px 50px 0 0;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.teacher-body::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 70px;
+    background: linear-gradient(180deg, #d4af37, #b8941f);
+    border-radius: 4px;
+}
+
+.teacher-name-tag {
+    margin-top: 10px;
+    padding: 6px 18px;
+    background: linear-gradient(135deg, var(--teacher-color), #1a3a4f);
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ============ STUDENTS GRID ============ */
+.students-grid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32%;
+    padding: 0.5rem;
+    z-index: 10;
+    display: grid;
+    gap: 0.4rem;
+    align-items: end;
+    justify-items: center;
+}
+
+.students-grid.layout-8 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.students-grid.layout-6 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.students-grid.layout-4 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.students-grid.layout-5 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.student-desk {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+
+.student-question {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--deep-blue);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(212,175,55,0.5);
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: 30;
+    max-width: 120px;
+    text-align: center;
+    line-height: 1.3;
+    border: 2px solid white;
+    margin-bottom: 5px;
+}
+
+.student-question:hover, .student-question:active {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.8);
+}
+
+.student-question.show {
+    opacity: 1;
+    animation: questionPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.student-question.speaking {
+    animation: questionSpeak 0.5s ease-in-out infinite;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+@keyframes questionSpeak {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.15); }
+}
+
+@keyframes questionPop {
+    0% { transform: translateX(-50%) scale(0) translateY(20px); }
+    100% { transform: translateX(-50%) scale(1) translateY(0); }
+}
+
+.student-figure {
+    width: 100%;
+    max-width: 70px;
+    height: auto;
+    aspect-ratio: 2/3;
+    position: relative;
+    animation: studentBreathe 3s ease-in-out infinite;
+}
+
+@keyframes studentBreathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+.student-head {
+    width: 60%;
+    aspect-ratio: 1/1.1;
+    background: linear-gradient(180deg, #e8b896 0%, #d49a78 100%);
+    border-radius: 50% 50% 45% 45%;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.student-hair {
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110%;
+    height: 40%;
+    border-radius: 50% 50% 0 0;
+}
+
+.student-eyes {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15%;
+}
+
+.student-eye {
+    width: 12%;
+    aspect-ratio: 1/1.2;
+    background: #1a1a1a;
+    border-radius: 50%;
+}
+
+.student-body {
+    width: 75%;
+    height: 50%;
+    margin: -5% auto 0;
+    border-radius: 35% 35% 0 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.student-desk-surface {
+    width: 90%;
+    max-width: 80px;
+    height: 6px;
+    background: linear-gradient(180deg, #8b6f47, #5d3a1a);
+    border-radius: 3px;
+    margin-top: 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Teacher Speech Bubble */
+.teacher-speech {
+    position: absolute;
+    bottom: 55%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.98);
+    color: var(--deep-blue);
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    font-weight: bold;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 50;
+    border: 3px solid var(--gold);
+    line-height: 1.6;
+}
+
+.teacher-speech::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 12px solid transparent;
+    border-top-color: rgba(255,255,255,0.98);
+}
+
+.teacher-speech.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* ============ QUESTION SCREEN ============ */
+.question-screen {
+    position: fixed;
+    inset: 0;
+    top: 60px;
+    background: radial-gradient(ellipse at center, #1a2a4a 0%, #0a1628 100%);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s;
+    z-index: 100;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.question-screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    opacity: 1;
+    padding-top: 2rem;
+}
+
+.question-container {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.question-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(212,175,55,0.3);
+    border-radius: 25px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+.question-text {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: white;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.choice-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.choice-btn {
+    padding: 1rem 1.5rem;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.choice-btn.listen {
+    background: linear-gradient(135deg, #0d7377, #14a3a8);
+    color: white;
+    box-shadow: 0 8px 25px rgba(13,115,119,0.5);
+}
+
+.choice-btn.listen:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(13,115,119,0.7);
+}
+
+.choice-btn.explain {
+    background: linear-gradient(135deg, var(--gold), #b8941f);
+    color: var(--deep-blue);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+}
+
+.choice-btn.explain:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(212,175,55,0.7);
+}
+
+.choice-btn.ask-again {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    box-shadow: 0 8px 25px rgba(155,89,182,0.5);
+}
+
+.choice-icon {
+    font-size: 1.5rem;
+}
+
+.audio-player {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 700px;
+    display: none;
+    width: 100%;
+}
+
+.audio-player.show {
+    display: block;
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.audio-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    color: var(--deep-blue);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.audio-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(212,175,55,0.6);
+}
+
+.audio-btn.playing {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.7); }
+    50% { box-shadow: 0 0 0 15px rgba(212,175,55,0); }
+}
+
+.verse-display-large {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    line-height: 2.2;
+    color: var(--gold-light);
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    margin-bottom: 1rem;
+}
+
+.answer-display {
+    background: linear-gradient(135deg, rgba(13,115,119,0.2), rgba(212,175,55,0.1));
+    border: 2px solid var(--emerald);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    display: none;
+    animation: slideUp 0.8s ease;
+    width: 100%;
+    max-width: 700px;
+}
+
+.answer-display.show {
+    display: block;
+}
+
+.answer-title {
+    color: var(--gold);
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.answer-text {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.8;
+    color: white;
+}
+
+.next-section-btn {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, var(--emerald), #14a3a8);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.3s;
+    font-family: inherit;
+    box-shadow: 0 8px 25px rgba(13,115,119,0.5);
+}
+
+.next-section-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(13,115,119,0.7);
+}
+
+.speaker-indicator {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--gold);
+    border-radius: 30px;
+    padding: 10px 20px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    z-index: 2000;
+    font-size: 0.9rem;
+}
+
+.speaker-indicator.show {
+    display: flex;
+    animation: slideUp 0.3s ease;
+}
+
+.speaker-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.speaker-avatar.teacher {
+    background: linear-gradient(135deg, var(--teacher-color), #1a3a4f);
+}
+
+.speaker-avatar.student {
+    background: linear-gradient(135deg, var(--student-color), #922b21);
+}
+
+.speaker-waves {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 20px;
+}
+
+.speaker-wave {
+    width: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: wave 0.8s ease-in-out infinite;
+}
+
+.speaker-wave:nth-child(1) { animation-delay: 0s; height: 8px; }
+.speaker-wave:nth-child(2) { animation-delay: 0.1s; height: 15px; }
+.speaker-wave:nth-child(3) { animation-delay: 0.2s; height: 10px; }
+.speaker-wave:nth-child(4) { animation-delay: 0.3s; height: 18px; }
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .students-grid {
+        height: 35%;
+        padding: 0.3rem;
+        gap: 0.3rem;
+    }
+    
+    .student-figure {
+        max-width: 60px;
+    }
+    
+    .student-question {
+        font-size: 0.6rem;
+        padding: 4px 7px;
+        max-width: 90px;
+        border-radius: 10px;
+    }
+    
+    .teacher-figure {
+        width: 110px;
+        height: 180px;
+    }
+    
+    .teacher-head {
+        width: 65px;
+        height: 75px;
+    }
+    
+    .teacher-body {
+        width: 90px;
+        height: 100px;
+    }
+    
+    .blackboard {
+        height: 28%;
+        border-width: 8px;
+    }
+    
+    .menu-logo {
+        font-size: 0.9rem;
+    }
+    
+    .teacher-container {
+        bottom: 35%;
+    }
+}
+
+@media (max-width: 480px) {
+    .students-grid {
+        height: 38%;
+        gap: 0.2rem;
+        padding: 0.2rem;
+    }
+    
+    .student-figure {
+        max-width: 55px;
+    }
+    
+    .student-question {
+        font-size: 0.55rem;
+        max-width: 75px;
+        padding: 3px 5px;
+        line-height: 1.2;
+    }
+    
+    .teacher-figure {
+        width: 90px;
+        height: 150px;
+    }
+    
+    .teacher-head {
+        width: 55px;
+        height: 65px;
+    }
+    
+    .teacher-body {
+        width: 75px;
+        height: 85px;
+    }
+    
+    .teacher-name-tag {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+    }
+    
+    .blackboard {
+        top: 5%;
+        height: 25%;
+    }
+    
+    .teacher-container {
+        bottom: 38%;
+    }
+}
+
+@media (max-width: 360px) {
+    .student-figure {
+        max-width: 48px;
+    }
+    
+    .student-question {
+        font-size: 0.5rem;
+        max-width: 65px;
+    }
+}
+
+/* Tablet optimization */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .students-grid {
+        height: 30%;
+    }
+    
+    .student-figure {
+        max-width: 80px;
+    }
+    
+    .student-question {
+        font-size: 0.75rem;
+        max-width: 130px;
+    }
+}
+
+/* Desktop optimization */
+@media (min-width: 1025px) {
+    .students-grid {
+        height: 28%;
+    }
+    
+    .student-figure {
+        max-width: 90px;
+    }
+    
+    .student-question {
+        font-size: 0.8rem;
+        max-width: 150px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Top Menu -->
+<div class="top-menu">
+    <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="menu-logo">📖 سورة إبراهيم</div>
+</div>
+
+<div class="menu-dropdown" id="menuDropdown">
+    <div class="menu-item" onclick="goToSection('intro')">
+        <div class="menu-item-icon">📖</div>
+        <div class="menu-item-text">التمهيد</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('topics')">
+        <div class="menu-item-icon">📋</div>
+        <div class="menu-item-text">أبرز موضوعات السورة</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('verses')">
+        <div class="menu-item-icon">📜</div>
+        <div class="menu-item-text">الآيات</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('meaning')">
+        <div class="menu-item-icon">📝</div>
+        <div class="menu-item-text">المعنى الإجمالي للآيات</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('words')">
+        <div class="menu-item-icon">📚</div>
+        <div class="menu-item-text">معاني الكلمات</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('benefits')">
+        <div class="menu-item-icon">✨</div>
+        <div class="menu-item-text">فوائد وأحكام</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('think')">
+        <div class="menu-item-icon">🤔</div>
+        <div class="menu-item-text">فكّر</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('connect')">
+        <div class="menu-item-icon">🔗</div>
+        <div class="menu-item-text">أربط</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('tech')">
+        <div class="menu-item-icon">💻</div>
+        <div class="menu-item-text">استثمر التقنية</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('recitation')">
+        <div class="menu-item-icon">🎙️</div>
+        <div class="menu-item-text">أجود تلاوتي</div>
+    </div>
+    <div class="menu-item" onclick="goToSection('assessment')">
+        <div class="menu-item-icon">✅</div>
+        <div class="menu-item-text">تقويم - أتأمل وأجيب</div>
+    </div>
+</div>
+
+<!-- Speaker Indicator -->
+<div class="speaker-indicator" id="speakerIndicator">
+    <div class="speaker-avatar" id="speakerAvatar">👨‍🏫</div>
+    <div id="speakerName">المعلم</div>
+    <div class="speaker-waves">
+        <div class="speaker-wave"></div>
+        <div class="speaker-wave"></div>
+        <div class="speaker-wave"></div>
+        <div class="speaker-wave"></div>
+    </div>
+</div>
+
+<!-- Landing Page -->
+<div class="landing" id="landing">
+    <div class="landing-bg">
+        <div class="landing-particles" id="particles"></div>
+    </div>
+    
+    <div class="landing-content">
+        <div class="lesson-badge">الدرس الخامس عشر</div>
+        <h1 class="main-title">سورة إبراهيم</h1>
+        <div class="subtitle">مادة القرآن الكريم وتفسيره</div>
+        <div class="verse-range">الآيات من 24 إلى 31</div>
+        
+        <div class="view-selector">
+            <div class="view-card disabled">
+                <span class="view-icon">👨‍🏫</span>
+                <div class="view-title">من وجهة نظر المعلم</div>
+                <div class="view-desc">عرض تفصيلي للمنهج والشرح</div>
+            </div>
+            
+            <div class="view-card" onclick="enterStudentView()">
+                <span class="view-icon">👨‍🎓</span>
+                <div class="view-title">من وجهة نظر الطالب</div>
+                <div class="view-desc">تعلم تفاعلي ممتع ومشوق</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Classroom Scene -->
+<div class="classroom" id="classroom">
+    <div class="classroom-bg"></div>
+    <div class="classroom-floor"></div>
+    
+    <div class="blackboard">
+        <div class="blackboard-content">
+            <div class="blackboard-title" id="boardTitle">سورة إبراهيم</div>
+            <div class="blackboard-subtitle" id="boardSubtitle">الآيات 24 - 31</div>
+        </div>
+    </div>
+    
+    <div class="teacher-speech" id="teacherSpeech"></div>
+    
+    <div class="teacher-container">
+        <div class="teacher-figure" id="teacherFigure">
+            <div class="teacher-head">
+                <div class="teacher-ghutra"></div>
+                <div class="teacher-eyes">
+                    <div class="teacher-eye"></div>
+                    <div class="teacher-eye"></div>
+                </div>
+                <div class="teacher-mouth"></div>
+                <div class="teacher-beard"></div>
+            </div>
+            <div class="teacher-body"></div>
+        </div>
+        <div class="teacher-name-tag">👨‍🏫 الأستاذ أحمد</div>
+    </div>
+    
+    <div class="students-grid" id="studentsGrid"></div>
+</div>
+
+<!-- Question Screen -->
+<div class="question-screen" id="questionScreen">
+    <div class="question-container">
+        <div class="question-card">
+            <div class="question-text" id="questionText"></div>
+            <div class="choice-buttons" id="choiceButtons">
+                <button class="choice-btn listen" onclick="chooseListen()">
+                    <span class="choice-icon">🎧</span>
+                    أريد أن أسمع الآية
+                </button>
+                <button class="choice-btn explain" onclick="chooseExplain()">
+                    <span class="choice-icon">📖</span>
+                    أريد التفسير والشرح
+                </button>
+            </div>
+        </div>
+        
+        <div class="audio-player" id="audioPlayer">
+            <div class="verse-display-large" id="verseDisplay"></div>
+            <div class="audio-controls">
+                <button class="audio-btn" onclick="toggleAudio()" id="playBtn">▶️</button>
+            </div>
+            <div style="text-align: center; margin-top: 1rem; color: var(--gold-light); font-size: 0.9rem;">
+                بصوت الشيخ مشاري العفاسي
+            </div>
+        </div>
+        
+        <div class="answer-display" id="answerDisplay">
+            <div class="answer-title">
+                <span>✨</span>
+                <span id="answerTitleText">إجابة المعلم</span>
+                <span>✨</span>
+            </div>
+            <div class="answer-text" id="answerText"></div>
+        </div>
+        
+        <button class="next-section-btn" id="nextBtn" style="display:none;" onclick="backToClassroom()">
+            العودة للفصل ←
+        </button>
+    </div>
+</div>
+
+<audio id="quranAudio" preload="auto"></audio>
+
+<script>
+// ============ DATA ============
+const sections = [
+    {
+        id: 'intro',
+        title: 'التمهيد',
+        boardTitle: 'سورة إبراهيم',
+        boardSubtitle: 'التمهيد للدرس',
+        teacherIntro: 'بسم الله الرحمن الرحيم. أهلاً بكم طلابي الأعزاء! اليوم سندرس سورة إبراهيم عليه السلام. هل أنتم مستعدون؟',
+        students: [
+            { question: 'نعم أستاذ! ما هي سورة إبراهيم؟', answer: 'سورة إبراهيم سورة مكية، وعدد آياتها اثنتان وخمسون آية، ومن أهم مقاصدها تذكير الناس بنعم الله عليهم وحثهم على شكرها، وتحذيرهم من جحودها وكفرها.', color: '#e74c3c' },
+            { question: 'أستاذ، لماذا سُميت بسورة إبراهيم؟', answer: 'سُميت بسورة إبراهيم لأن الله تعالى ذكر فيها قصة نبيه إبراهيم عليه السلام مع قومه، ودعاءه لأهل مكة، وهو من أولي العزم من الرسل.', color: '#3498db' },
+            { question: 'ما الفرق بين السور المكية والمدنية؟', answer: 'السور المكية نزلت قبل الهجرة وتركز على العقيدة والتوحيد، والمدنية نزلت بعد الهجرة وتركز على الأحكام والتشريع. وسورة إبراهيم من السور المكية.', color: '#2ecc71' },
+            { question: 'كم عدد آيات سورة إبراهيم؟', answer: 'عدد آيات سورة إبراهيم اثنتان وخمسون آية، وهي السورة الرابعة عشرة في ترتيب المصحف الشريف.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'topics',
+        title: 'أبرز موضوعات السورة',
+        boardTitle: 'أبرز موضوعات السورة',
+        boardSubtitle: 'المحاور الرئيسية',
+        teacherIntro: 'ممتاز! الآن لنتعرف على أبرز موضوعات سورة إبراهيم. كل طالب سيسأل عن موضوع مختلف.',
+        students: [
+            { question: 'ما هي قضايا العقيدة في السورة؟', answer: 'تقرير قضايا العقيدة كالتوحيد، والرسالة، والبعث، والحساب، والجزاء. وهذه أصول الإيمان التي بعث الله من أجلها الرسل.', color: '#e74c3c' },
+            { question: 'ما أخبار الرسل في السورة؟', answer: 'ذكر بعض أخبار الرسل عليهم الصلاة والسلام، وصبرهم على أقوامهم، وبيان مخالفة الرسل من التبليغ والإنذار والنصح والتبيين.', color: '#3498db' },
+            { question: 'كيف بينت السورة نعمة الله؟', answer: 'بينت نعمة الله تعالى على الناس، وأنها تزداد بالشكر، وأن أكثر الناس يقابلونها بالجحود والكفران.', color: '#2ecc71' },
+            { question: 'ما التحذير والوعيد في السورة؟', answer: 'التحذير والوعيد، وتصوير مشاهد القيامة، وما يكون فيها من الحساب والجزاء والعذاب للكافرين.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'verses',
+        title: 'الآيات',
+        boardTitle: 'الآيات المقررة',
+        boardSubtitle: 'من الآية 24 إلى 31',
+        teacherIntro: 'الآن نقرأ الآيات المقررة من سورة إبراهيم. استمعوا جيداً.',
+        students: [
+            { question: 'أستاذ، نريد أن نسمع الآية 24', answer: 'قال تعالى: "أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا كَلِمَةً طَيِّبَةً كَشَجَرَةٍ طَيِّبَةٍ أَصْلُهَا ثَابِتٌ وَفَرْعُهَا فِي السَّمَاءِ". شبه الله كلمة التوحيد بشجرة طيبة.', color: '#e74c3c' },
+            { question: 'ماذا تقول الآية 25؟', answer: 'قال تعالى: "تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا ۗ وَيَضْرِبُ اللَّهُ الْأَمْثَالَ لِلنَّاسِ لَعَلَّهُمْ يَتَذَكَّرُونَ". أي تعطي ثمرها في كل وقت.', color: '#3498db' },
+            { question: 'وما معنى الآية 26؟', answer: 'قال تعالى: "وَمَثَلُ كَلِمَةٍ خَبِيثَةٍ كَشَجَرَةٍ خَبِيثَةٍ اجْتُثَّتْ مِن فَوْقِ الْأَرْضِ مَا لَهَا مِن قَرَارٍ". الكلمة الخبيثة هي الكفر.', color: '#2ecc71' },
+            { question: 'أستاذ، وضح لنا الآية 27', answer: 'قال تعالى: "يُثَبِّتُ اللَّهُ الَّذِينَ آمَنُوا بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ". يثبت الله المؤمنين عند الشدائد والموت وفي القبر.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'meaning',
+        title: 'المعنى الإجمالي للآيات',
+        boardTitle: 'المعنى الإجمالي',
+        boardSubtitle: 'تفسير الآيات',
+        teacherIntro: 'الآن نشرح المعنى الإجمالي للآيات. اسألوا عما تريدون فهمه.',
+        students: [
+            { question: 'ما معنى كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله"، شبهها الله تعالى بشجرة طيبة، جذرها ثابت في الأرض، وأغصانها ممتدة نحو السماء، وهي كثيرة النفع، تعطي ثمرها في كل وقت بإذن ربها.', color: '#e74c3c' },
+            { question: 'ما معنى الكلمة الخبيثة؟', answer: 'الكلمة الخبيثة هي الكفر والشرك بالله، شبهها الله بشجرة خبيثة لا جذر ثابت لها في الأرض، ولا ثمر طيب تنتجه، كذلك من لا يدين بالدين الحق، لا ثبات له ولا خير فيه.', color: '#3498db' },
+            { question: 'كيف يثبت الله المؤمنين؟', answer: 'يثبت الله المؤمنين بالقول الثابت في الحياة الدنيا عند الشدائد بالشهادة واليقين، وعند الشهوات بترك الإيثار، وعند الموت بحسن الخاتمة، وفي القبر بالقول الصادق.', color: '#2ecc71' },
+            { question: 'ما مصير من بدل نعمة الله كفراً؟', answer: 'أحل قومه دار البوار وهي جهنم يصلونها وبئس القرار، وذلك بسبب تكذيبهم واتخاذهم شركاء لله في العبادة.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'words',
+        title: 'معاني الكلمات',
+        boardTitle: 'معاني الكلمات',
+        boardSubtitle: 'المفردات الغريبة',
+        teacherIntro: 'الآن نتعلم معاني الكلمات الغريبة في الآيات. اسألوا عن أي كلمة.',
+        students: [
+            { question: 'ما معنى "كلمة طيبة"؟', answer: 'كلمة طيبة: هي كلمة التوحيد "لا إله إلا الله"، وهي أصل الإيمان وأساسه.', color: '#e74c3c' },
+            { question: 'ما معنى "أُكُلها"؟', answer: 'أُكُلها: أي ثمرها وفائدتها. والمؤمن الذي يقول لا إله إلا الله تظهر آثار التوحيد على جوارحه.', color: '#3498db' },
+            { question: 'ما معنى "اجتُثّت"؟', answer: 'اجتُثّت: أي قُطعت من أصلها واستُؤصلت. فكذلك الكافر لا أصل له ولا ثبات.', color: '#2ecc71' },
+            { question: 'ما معنى "دار البوار"؟', answer: 'دار البوار: أي دار الهلاك والخسران، وهي جهنم. والبوار: الهلاك.', color: '#f39c12' },
+            { question: 'ما معنى "أنداداً"؟', answer: 'أنداداً: أي شركاء وأمثالاً. وجعلوا لله أنداداً أي اتخذوا معه آلهة أخرى.', color: '#9b59b6' },
+            { question: 'ما معنى "خلال"؟', answer: 'خلال: أي مخاللة ومصادقة. يوم لا بيع فيه ولا خلال، أي لا تنفع فيه فدية ولا صداقة.', color: '#1abc9c' }
+        ]
+    },
+    {
+        id: 'benefits',
+        title: 'فوائد وأحكام',
+        boardTitle: 'فوائد وأحكام',
+        boardSubtitle: 'من الآيات المقررة',
+        teacherIntro: 'ممتاز! الآن ننتقل إلى فوائد وأحكام هذه الآيات. من يريد أن يبدأ؟',
+        students: [
+            { question: 'ما فضل كلمة التوحيد؟', answer: 'كلمة التوحيد هي مفتاح الجنة، وموجبة الفوز بالشفاعة العظمى يوم القيامة. قال ﷺ: "أسعد الناس بشفاعتي يوم القيامة من قال: لا إله إلا الله، خالصاً من قلبه أو نفسه" رواه البخاري.', color: '#e74c3c' },
+            { question: 'ما أهمية الشهادة في الإسلام؟', answer: 'الشهادة لا تُقبل إلا بأركانها وشروطها. الركنان: الإقرار باللسان، والاعتقاد بالقلب. والشروط سبعة: العلم، واليقين، والقبول، والانقياد، والصدق، والإخلاص، والمحبة.', color: '#3498db' },
+            { question: 'ما معنى الثبات على الدين؟', answer: 'الثبات على الدين هو السعادة والنجاح في الدنيا والآخرة. كان أكثر دعاء النبي ﷺ: "يا مقلب القلوب ثبت قلبي على دينك" رواه الترمذي.', color: '#2ecc71' },
+            { question: 'ما حكم فتنة القبر وعذابه؟', answer: 'فتنة القبر وعذابه ونعيمه حق ثابت. أوصى النبي ﷺ بالاستعاذة منها في التشهد الأخير: "اللهم إني أعوذ بك من عذاب جهنم، ومن عذاب القبر..." رواه مسلم.', color: '#f39c12' },
+            { question: 'ما الحكمة من المبادرة بالأعمال الصالحة؟', answer: 'يجب المبادرة بالأعمال الصالحة واغتنام الوقت، ومن أعظمها الصلاة والصدقة، فقد قرنهما الله في الآية: "يقيموا الصلاة وينفقوا مما رزقناهم".', color: '#9b59b6' }
+        ]
+    },
+    {
+        id: 'think',
+        title: 'فكّر',
+        boardTitle: 'فكّر',
+        boardSubtitle: 'تأمل واستنتج',
+        teacherIntro: 'الآن ننتقل إلى مرحلة التفكير والتأمل. هل أنتم مستعدون لتحدي العقل؟',
+        students: [
+            { question: 'متى يكون الإنفاق في العلن أفضل؟', answer: 'يكون الإنفاق في العلن أفضل عندما يكون فيه اقتداء بالناس وتشجيعهم على الخير، أو عندما يكون واجباً معلوماً كالزكاة، أو عندما يحتاج الأمر لإعلان التبرع لتحفيز الآخرين.', color: '#e74c3c' },
+            { question: 'لماذا ذكر الله السر والعلانية معاً؟', answer: 'لأن الإخلاص مطلوب في الحالتين، والسر أفضل للرياء، والعلانية أفضل للقدوة. والمؤمن يجمع بينهما حسب المصلحة.', color: '#3498db' },
+            { question: 'ما العلاقة بين الصلاة والإنفاق؟', answer: 'الصلاة حق الله، والإنفاق حق الخلق. ومن أقام الصلاة وأنفق فقد جمع بين حقي الله والعباد، وهذا كمال الإيمان.', color: '#2ecc71' },
+            { question: 'كيف نغتنم وقتنا فيما ينفع؟', answer: 'بالعلم النافع، والعمل الصالح، وبر الوالدين، وصلة الأرحام، وقراءة القرآن، والذكر، والدعاء، والإحسان للخلق.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'connect',
+        title: 'أربط',
+        boardTitle: 'أربط',
+        boardSubtitle: 'القرآن بالقرآن والسنة',
+        teacherIntro: 'الآن نربط ما تعلمناه بآيات وأحاديث أخرى. من يستطيع أن يربط؟',
+        students: [
+            { question: 'اربط آية آدم بقصة إبراهيم', answer: 'كلا القصتين تدلان على نعمة الله التي يجب شكرها. آدم أسكنه الله الجنة فكفر إبليس، وإبراهيم أنعم عليه بالنبوة فكفر قومه. والشكر واجب في الحالتين.', color: '#e74c3c' },
+            { question: 'اربط حديث القبر بالآية 27', answer: 'قال ﷺ: "المسلم إذا سئل في القبر يشهد أن لا إله إلا الله" وهذا تفسير لقوله تعالى: "يثبت الله الذين آمنوا بالقول الثابت" في القبر.', color: '#3498db' },
+            { question: 'ما علاقة سورة الفاتحة بهذا الدرس؟', answer: 'الفاتحة فيها التوحيد "إياك نعبد وإياك نستعين" وهو أصل كلمة التوحيد الطيبة التي شبهها الله بالشجرة الطيبة.', color: '#2ecc71' },
+            { question: 'كيف نربط الصلاة بالإنفاق؟', answer: 'الصلاة والإنفاق ركنان من أركان الإسلام، وجمعهما في آية واحدة يدل على أن الدين يقوم على حق الله وحق الخلق.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'tech',
+        title: 'استثمر التقنية',
+        boardTitle: 'استثمر التقنية',
+        boardSubtitle: 'التفسير الرقمي',
+        teacherIntro: 'الآن نتعلم كيف نستخدم التقنية في فهم القرآن. يمكنكم استخدام مواقع التفسير المعتمدة.',
+        students: [
+            { question: 'ما هي مواقع التفسير الموثوقة؟', answer: 'من المواقع الموثوقة: موقع التفسير الميسر، وموقع تفسير السعدي، وموقع الدرر السنية. ويمكنكم استخدامها لفهم آيات القرآن.', color: '#e74c3c' },
+            { question: 'كيف نستفيد من التقنية في الحفظ؟', answer: 'يمكن استخدام التطبيقات الصوتية للاستماع للتلاوة، وتطبيقات الحفظ للمراجعة، والمواقع الإلكترونية للبحث عن معاني الكلمات.', color: '#3498db' },
+            { question: 'ما فوائد استخدام التطبيقات القرآنية؟', answer: 'تساعد على التلاوة الصحيحة، والحفظ المتقن، وفهم المعاني، ومراجعة ما تم حفظه، والاستماع للقراء المشهورين.', color: '#2ecc71' },
+            { question: 'كيف نتحقق من صحة المعلومات؟', answer: 'بالرجوع إلى المصادر المعتمدة مثل كتب التفسير المعتبرة، والسؤال عن أهل العلم، وعدم الأخذ من مصادر غير موثوقة.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'recitation',
+        title: 'أجود تلاوتي',
+        boardTitle: 'أجود تلاوتي',
+        boardSubtitle: 'التجويد والتلاوة',
+        teacherIntro: 'الآن نتعلم أحكام التجويد في الآيات. استمعوا للتلاوة الصحيحة.',
+        students: [
+            { question: 'ما حكم المد في "طَيِّبَةً"؟', answer: 'في كلمة "طيبة" مد طبيعي مقداره حركتان، لأن الياء ساكنة وما قبلها مكسور.', color: '#e74c3c' },
+            { question: 'ما حكم الغنة في "مِن فَوْقِ"؟', answer: 'في "من فوق" غنة بمقدار حركتين لأن النون ساكنة وجاء بعدها الفاء.', color: '#3498db' },
+            { question: 'ما حكم الإدغام في "مِن قَرَارٍ"؟', answer: 'في "من قرار" إدغام النون في القاف بغنة، لأن النون الساكنة جاء بعدها حرف القاف.', color: '#2ecc71' },
+            { question: 'كيف نطبق أحكام التجويد؟', answer: 'بالتدريب المستمر، والاستماع للقراء المتقنين، وتعلم مخارج الحروف وصفاتها، والمراجعة الدائمة.', color: '#f39c12' }
+        ]
+    },
+    {
+        id: 'assessment',
+        title: 'تقويم - أتأمل وأجيب',
+        boardTitle: 'تقويم',
+        boardSubtitle: 'اختبر معلوماتك',
+        teacherIntro: 'الآن حان وقت التقويم! لنرى من استفاد من الدرس. من يريد أن يجيب؟',
+        students: [
+            { question: 'ما هي كلمة التوحيد الطيبة؟', answer: 'كلمة التوحيد الطيبة هي "لا إله إلا الله"، وهي أصل الإيمان وأساسه، ومن قالها مخلصاً دخل الجنة.', color: '#e74c3c' },
+            { question: 'ما معنى "أصلها ثابت وفرعها في السماء"؟', answer: 'أصلها ثابت في قلب المؤمن بالإيمان، وفرعها في السماء بأعمالها الصالحة التي تصعد إلى الله تعالى.', color: '#3498db' },
+            { question: 'ما حكم من بدل نعمة الله كفراً؟', answer: 'من كفر نعمة الله واستبدل بها الكفر، فقد أحل قومه دار البوار وهي جهنم، وبئس المصير.', color: '#2ecc71' },
+            { question: 'ما هي العبادة التي قرن الله بها الإنفاق؟', answer: 'الصلاة، قال تعالى: "يقيموا الصلاة وينفقوا مما رزقناهم". فالصلاة والإنفاق عماد الدين.', color: '#f39c12' },
+            { question: 'ما أكثر دعاء النبي ﷺ؟', answer: 'كان أكثر دعاءه: "يا مقلب القلوب ثبت قلبي على دينك" رواه الترمذي، وهذا دعاء الثبات على الإيمان.', color: '#9b59b6' },
+            { question: 'ما الواجب علينا بعد دراسة هذا الدرس؟', answer: 'الواجب: تلاوة الآيات وحفظها، والعمل بما فيها، والدعاء بالثبات، وشكر نعم الله، والبعد عن الكفران.', color: '#1abc9c' }
+        ]
+    }
+];
+
+let currentSection = 0;
+let currentStudent = null;
+let audioPlaying = false;
+let audioEl = document.getElementById('quranAudio');
+let teacherVoice = null;
+let studentVoice = null;
+let isSpeaking = false;
+let pendingSectionLoad = null;
+
+// ============ INITIALIZATION ============
+function init() {
+    createParticles();
+    loadVoices();
+}
+
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 15 + 's';
+        p.style.animationDuration = (10 + Math.random() * 10) + 's';
+        container.appendChild(p);
+    }
+}
+
+// ============ IMPROVED VOICE LOADING ============
+function loadVoices() {
+    const voices = speechSynthesis.getVoices();
+    if (voices.length === 0) return;
+    
+    // Priority list for best Arabic voices (more natural sounding)
+    const voicePriority = [
+        // Google voices (most natural)
+        v => v.name === 'Google العربية' || v.name === 'Google Arabic',
+        v => v.lang === 'ar-SA' && v.name.includes('Google'),
+        v => v.lang === 'ar' && v.name.includes('Google'),
+        // Microsoft voices
+        v => v.name === 'Microsoft Hoda' || v.name === 'Microsoft Naayf',
+        v => v.lang === 'ar-SA' && v.name.includes('Microsoft'),
+        // Saudi specific
+        v => v.lang === 'ar-SA',
+        // Other Arabic
+        v => v.lang.startsWith('ar') && v.name.includes('Female'),
+        v => v.lang.startsWith('ar') && v.name.includes('Male'),
+        v => v.lang.startsWith('ar')
+    ];
+    
+    // Find best teacher voice (prefer male, deeper)
+    for (const check of voicePriority) {
+        const found = voices.find(v => check(v) && (!v.name.includes('Female') || v.name.includes('Naayf')));
+        if (found) {
+            teacherVoice = found;
+            break;
+        }
+    }
+    
+    // Find best student voice (prefer female, higher pitch)
+    for (const check of voicePriority) {
+        const found = voices.find(v => check(v) && (v.name.includes('Female') || v.name.includes('Hoda') || v.name.includes('Zira')));
+        if (found) {
+            studentVoice = found;
+            break;
+        }
+    }
+    
+    // Fallback
+    if (!teacherVoice) teacherVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
+    if (!studentVoice) studentVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
+    
+    console.log('Teacher voice:', teacherVoice?.name, teacherVoice?.lang);
+    console.log('Student voice:', studentVoice?.name, studentVoice?.lang);
+}
+
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+// ============ IMPROVED SPEECH FUNCTION ============
+function speak(text, isTeacher = true, callback) {
+    if (!('speechSynthesis' in window)) {
+        if (callback) setTimeout(callback, 100);
+        return;
+    }
+    
+    speechSynthesis.cancel();
+    
+    // Split long text into sentences for more natural pauses
+    const sentences = text.split(/(?<=[.!?،۔])\s+/);
+    let currentIndex = 0;
+    
+    function speakNext() {
+        if (currentIndex >= sentences.length) {
+            hideSpeakerIndicator();
+            isSpeaking = false;
+            if (callback) callback();
+            return;
+        }
+        
+        const sentence = sentences[currentIndex].trim();
+        if (!sentence) {
+            currentIndex++;
+            speakNext();
+            return;
+        }
+        
+        const utter = new SpeechSynthesisUtterance(sentence);
+        utter.lang = 'ar-SA';
+        
+        // More natural settings
+        if (isTeacher) {
+            utter.rate = 0.92;  // Slightly slower for clarity
+            utter.pitch = 0.9;  // Slightly deeper
+            utter.volume = 1;
+        } else {
+            utter.rate = 0.95;
+            utter.pitch = 1.1;  // Slightly higher for student
+            utter.volume = 1;
+        }
+        
+        // Use best available voice
+        if (isTeacher && teacherVoice) utter.voice = teacherVoice;
+        else if (!isTeacher && studentVoice) utter.voice = studentVoice;
+        
+        showSpeakerIndicator(isTeacher);
+        isSpeaking = true;
+        
+        utter.onend = () => {
+            currentIndex++;
+            // Small pause between sentences for natural flow
+            setTimeout(speakNext, 200);
+        };
+        
+        utter.onerror = () => {
+            hideSpeakerIndicator();
+            isSpeaking = false;
+            if (callback) callback();
+        };
+        
+        speechSynthesis.speak(utter);
+    }
+    
+    speakNext();
+}
+
+function showSpeakerIndicator(isTeacher) {
+    const indicator = document.getElementById('speakerIndicator');
+    const avatar = document.getElementById('speakerAvatar');
+    const name = document.getElementById('speakerName');
+    
+    avatar.textContent = isTeacher ? '👨‍🏫' : '👨‍🎓';
+    avatar.className = 'speaker-avatar ' + (isTeacher ? 'teacher' : 'student');
+    name.textContent = isTeacher ? 'المعلم يتحدث...' : 'الطالب يسأل...';
+    
+    indicator.classList.add('show');
+    
+    if (isTeacher) {
+        document.getElementById('teacherFigure').classList.add('teacher-speaking');
+    }
+}
+
+function hideSpeakerIndicator() {
+    document.getElementById('speakerIndicator').classList.remove('show');
+    document.getElementById('teacherFigure').classList.remove('teacher-speaking');
+}
+
+// ============ NAVIGATION - FIXED ============
+function toggleMenu() {
+    const toggle = document.getElementById('menuToggle');
+    const dropdown = document.getElementById('menuDropdown');
+    toggle.classList.toggle('active');
+    dropdown.classList.toggle('open');
+}
+
+function goToSection(sectionId) {
+    const index = sections.findIndex(s => s.id === sectionId);
+    if (index === -1) return;
+    
+    // Close menu
+    toggleMenu();
+    
+    const landing = document.getElementById('landing');
+    const classroom = document.getElementById('classroom');
+    const questionScreen = document.getElementById('questionScreen');
+    
+    // Cancel any ongoing speech
+    speechSynthesis.cancel();
+    stopAudio();
+    
+    if (!landing.classList.contains('hidden')) {
+        // Case 1: User is on landing page - open classroom with selected section
+        currentSection = index;
+        enterStudentView();
+    } else if (questionScreen.classList.contains('active')) {
+        // Case 2: User is on question screen - go back to classroom then load section
+        questionScreen.classList.remove('active');
+        currentSection = index;
+        setTimeout(() => {
+            loadSection(index);
+        }, 400);
+    } else if (classroom.classList.contains('active')) {
+        // Case 3: User is already in classroom - just load the new section
+        currentSection = index;
+        loadSection(index);
+    }
+}
+
+function enterStudentView() {
+    document.getElementById('landing').classList.add('hidden');
+    setTimeout(() => {
+        document.getElementById('classroom').classList.add('active');
+        loadSection(currentSection);
+    }, 800);
+}
+
+function loadSection(index) {
+    currentSection = index;
+    const section = sections[index];
+    
+    // Update blackboard
+    document.getElementById('boardTitle').textContent = section.boardTitle;
+    document.getElementById('boardSubtitle').textContent = section.boardSubtitle;
+    
+    // Render students
+    renderStudents(section);
+    
+    // Hide teacher speech initially
+    const speech = document.getElementById('teacherSpeech');
+    speech.classList.remove('show');
+    
+    // Start teacher intro after a short delay
+    setTimeout(() => {
+        showTeacherQuestion(section.teacherIntro, () => {
+            // After teacher finishes, show student questions
+            setTimeout(() => {
+                document.querySelectorAll('.student-question').forEach((q, i) => {
+                    setTimeout(() => q.classList.add('show'), i * 250);
+                });
+            }, 400);
+        });
+    }, 800);
+}
+
+// ============ DYNAMIC STUDENTS GRID ============
+function renderStudents(section) {
+    const grid = document.getElementById('studentsGrid');
+    grid.innerHTML = '';
+    
+    const count = section.students.length;
+    
+    let layoutClass = 'layout-8';
+    if (count <= 4) layoutClass = 'layout-4';
+    else if (count <= 5) layoutClass = 'layout-5';
+    else if (count <= 6) layoutClass = 'layout-6';
+    
+    grid.className = 'students-grid ' + layoutClass;
+    
+    section.students.forEach((student, i) => {
+        const desk = document.createElement('div');
+        desk.className = 'student-desk';
+        
+        const question = document.createElement('div');
+        question.className = 'student-question';
+        question.textContent = student.question;
+        question.style.background = `linear-gradient(135deg, ${student.color}, ${adjustColor(student.color, 30)})`;
+        question.onclick = () => selectStudent(i);
+        
+        const figure = document.createElement('div');
+        figure.className = 'student-figure';
+        figure.style.animationDelay = (i * 0.2) + 's';
+        
+        const head = document.createElement('div');
+        head.className = 'student-head';
+        const hair = document.createElement('div');
+        hair.className = 'student-hair';
+        hair.style.background = ['#2c1810', '#4a2e14', '#1a0f08', '#3d2817', '#5d3a1a', '#6b4423'][i % 6];
+        const eyes = document.createElement('div');
+        eyes.className = 'student-eyes';
+        eyes.innerHTML = '<div class="student-eye"></div><div class="student-eye"></div>';
+        head.appendChild(hair);
+        head.appendChild(eyes);
+        
+        const body = document.createElement('div');
+        body.className = 'student-body';
+        body.style.background = `linear-gradient(180deg, ${student.color}, ${adjustColor(student.color, -30)})`;
+        
+        const deskSurface = document.createElement('div');
+        deskSurface.className = 'student-desk-surface';
+        
+        figure.appendChild(head);
+        figure.appendChild(body);
+        desk.appendChild(question);
+        desk.appendChild(figure);
+        desk.appendChild(deskSurface);
+        grid.appendChild(desk);
+    });
+}
+
+function adjustColor(hex, amount) {
+    const num = parseInt(hex.slice(1), 16);
+    const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+    const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+    const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+    return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
+}
+
+function showTeacherQuestion(text, callback) {
+    const speech = document.getElementById('teacherSpeech');
+    const teacher = document.getElementById('teacherFigure');
+    
+    speech.textContent = text;
+    speech.classList.add('show');
+    teacher.classList.add('teacher-speaking');
+    
+    speak(text, true, () => {
+        teacher.classList.remove('teacher-speaking');
+        setTimeout(() => {
+            speech.classList.remove('show');
+            if (callback) callback();
+        }, 500);
+    });
+}
+
+function selectStudent(index) {
+    if (isSpeaking) return;
+    
+    currentStudent = index;
+    const section = sections[currentSection];
+    const student = section.students[index];
+    
+    const questionEl = document.querySelectorAll('.student-question')[index];
+    questionEl.classList.add('speaking');
+    
+    speak(student.question, false, () => {
+        questionEl.classList.remove('speaking');
+        
+        document.getElementById('questionText').textContent = student.question;
+        document.getElementById('answerTitleText').textContent = 'إجابة المعلم';
+        document.getElementById('answerText').textContent = student.answer;
+        
+        document.getElementById('questionScreen').classList.add('active');
+        document.getElementById('audioPlayer').classList.remove('show');
+        document.getElementById('answerDisplay').classList.remove('show');
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('choiceButtons').style.display = 'flex';
+    });
+}
+
+function backToClassroom() {
+    document.getElementById('questionScreen').classList.remove('active');
+    stopAudio();
+    speechSynthesis.cancel();
+}
+
+function chooseListen() {
+    const section = sections[currentSection];
+    document.getElementById('verseDisplay').textContent = section.verse || 'بسم الله الرحمن الرحيم';
+    document.getElementById('audioPlayer').classList.add('show');
+    document.getElementById('choiceButtons').style.display = 'none';
+    
+    audioEl.src = section.audioUrl || 'https://everyayah.com/data/Alafasy_128kbps/014024.mp3';
+    
+    setTimeout(() => {
+        toggleAudio();
+    }, 500);
+}
+
+function chooseExplain() {
+    const student = sections[currentSection].students[currentStudent];
+    document.getElementById('answerDisplay').classList.add('show');
+    document.getElementById('choiceButtons').style.display = 'none';
+    
+    speak(student.answer, true, () => {
+        setTimeout(() => {
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            addAskAgainButton();
+        }, 1000);
+    });
+}
+
+function addAskAgainButton() {
+    const choiceButtons = document.getElementById('choiceButtons');
+    if (!document.getElementById('askAgainBtn')) {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn ask-again';
+        btn.id = 'askAgainBtn';
+        btn.innerHTML = '<span class="choice-icon">🔄</span> اسأل مرة أخرى';
+        btn.onclick = () => askAgain();
+        choiceButtons.appendChild(btn);
+        choiceButtons.style.display = 'flex';
+    }
+}
+
+function askAgain() {
+    const student = sections[currentSection].students[currentStudent];
+    document.getElementById('answerDisplay').classList.remove('show');
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('askAgainBtn')?.remove();
+    document.getElementById('choiceButtons').style.display = 'none';
+    
+    speak(student.question, false, () => {
+        setTimeout(() => {
+            document.getElementById('answerDisplay').classList.add('show');
+            speak(student.answer, true, () => {
+                setTimeout(() => {
+                    document.getElementById('nextBtn').style.display = 'inline-block';
+                    addAskAgainButton();
+                }, 1000);
+            });
+        }, 500);
+    });
+}
+
+function toggleAudio() {
+    const btn = document.getElementById('playBtn');
+    
+    if (audioPlaying) {
+        audioEl.pause();
+        btn.textContent = '▶️';
+        btn.classList.remove('playing');
+        audioPlaying = false;
+    } else {
+        audioEl.play().then(() => {
+            btn.textContent = '⏸️';
+            btn.classList.add('playing');
+            audioPlaying = true;
+        }).catch(e => {
+            alert('تعذر تشغيل الصوت. تأكد من اتصالك بالإنترنت.');
+        });
+    }
+}
+
+function stopAudio() {
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioPlaying = false;
+    const btn = document.getElementById('playBtn');
+    if (btn) {
+        btn.textContent = '▶️';
+        btn.classList.remove('playing');
+    }
+}
+
+audioEl.addEventListener('ended', () => {
+    audioPlaying = false;
+    const btn = document.getElementById('playBtn');
+    if (btn) {
+        btn.textContent = '▶️';
+        btn.classList.remove('playing');
+    }
+    
+    setTimeout(() => {
+        document.getElementById('nextBtn').style.display = 'inline-block';
+    }, 1000);
+});
+
+// Initialize
+init();
+</script>
+</body>
+</html>
