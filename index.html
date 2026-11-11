@@ -257,6 +257,47 @@ body {
     animation: fadeUp 1s ease 1.2s forwards;
 }
 
+/* ============ ENABLE SOUND BUTTON ============ */
+.enable-sound-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #0d7377, #14a3a8);
+    color: white;
+    border: 2px solid var(--gold);
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px rgba(13,115,119,0.5);
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.3s forwards;
+    font-family: inherit;
+}
+
+.enable-sound-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(13,115,119,0.7);
+}
+
+.enable-sound-btn.enabled {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    border-color: #2ecc71;
+}
+
+.sound-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
 .view-selector {
     display: flex;
     gap: 1rem;
@@ -1076,6 +1117,32 @@ body {
     50% { transform: scaleY(1); }
 }
 
+/* Sound Alert */
+.sound-alert {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    z-index: 3000;
+    display: none;
+    box-shadow: 0 10px 30px rgba(231,76,60,0.5);
+    animation: slideDown 0.5s ease;
+}
+
+.sound-alert.show {
+    display: block;
+}
+
+@keyframes slideDown {
+    from { transform: translateX(-50%) translateY(-100px); }
+    to { transform: translateX(-50%) translateY(0); }
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
     .students-grid {
@@ -1121,6 +1188,11 @@ body {
     
     .teacher-container {
         bottom: 35%;
+    }
+    
+    .enable-sound-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
     }
 }
 
@@ -1170,6 +1242,11 @@ body {
     .teacher-container {
         bottom: 38%;
     }
+    
+    .enable-sound-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 360px) {
@@ -1183,7 +1260,6 @@ body {
     }
 }
 
-/* Tablet optimization */
 @media (min-width: 769px) and (max-width: 1024px) {
     .students-grid {
         height: 30%;
@@ -1199,7 +1275,6 @@ body {
     }
 }
 
-/* Desktop optimization */
 @media (min-width: 1025px) {
     .students-grid {
         height: 28%;
@@ -1217,6 +1292,11 @@ body {
 </style>
 </head>
 <body>
+
+<!-- Sound Alert -->
+<div class="sound-alert" id="soundAlert">
+    🔊 يرجى تفعيل الصوت أولاً من الزر أعلاه
+</div>
 
 <!-- Top Menu -->
 <div class="top-menu">
@@ -1298,6 +1378,12 @@ body {
         <h1 class="main-title">سورة إبراهيم</h1>
         <div class="subtitle">مادة القرآن الكريم وتفسيره</div>
         <div class="verse-range">الآيات من 24 إلى 31</div>
+        
+        <!-- Enable Sound Button -->
+        <button class="enable-sound-btn" id="enableSoundBtn" onclick="enableSound()">
+            <span class="sound-icon">🔊</span>
+            <span id="soundBtnText">اضغط لتفعيل الصوت</span>
+        </button>
         
         <div class="view-selector">
             <div class="view-card disabled">
@@ -1393,7 +1479,6 @@ body {
 <audio id="quranAudio" preload="auto"></audio>
 
 <script>
-// ============ DATA ============
 const sections = [
     {
         id: 'intro',
@@ -1552,7 +1637,47 @@ let audioEl = document.getElementById('quranAudio');
 let teacherVoice = null;
 let studentVoice = null;
 let isSpeaking = false;
-let pendingSectionLoad = null;
+let soundEnabled = false;
+
+// ============ ENABLE SOUND FUNCTION ============
+function enableSound() {
+    const btn = document.getElementById('enableSoundBtn');
+    const btnText = document.getElementById('soundBtnText');
+    
+    // Test speech synthesis
+    if ('speechSynthesis' in window) {
+        const testUtter = new SpeechSynthesisUtterance('تم تفعيل الصوت بنجاح');
+        testUtter.lang = 'ar-SA';
+        testUtter.volume = 1;
+        
+        // Find Arabic voice
+        const voices = speechSynthesis.getVoices();
+        const arabicVoice = voices.find(v => v.lang.startsWith('ar'));
+        if (arabicVoice) testUtter.voice = arabicVoice;
+        
+        testUtter.onend = () => {
+            soundEnabled = true;
+            btn.classList.add('enabled');
+            btnText.textContent = '✅ تم تفعيل الصوت';
+            loadVoices();
+        };
+        
+        testUtter.onerror = () => {
+            showSoundAlert('⚠️ لم يتم تفعيل الصوت. جربي متصفح Chrome');
+        };
+        
+        speechSynthesis.speak(testUtter);
+    } else {
+        showSoundAlert('⚠️ متصفحك لا يدعم الصوت. جربي Chrome');
+    }
+}
+
+function showSoundAlert(message) {
+    const alert = document.getElementById('soundAlert');
+    alert.textContent = message;
+    alert.classList.add('show');
+    setTimeout(() => alert.classList.remove('show'), 3000);
+}
 
 // ============ INITIALIZATION ============
 function init() {
@@ -1572,47 +1697,32 @@ function createParticles() {
     }
 }
 
-// ============ IMPROVED VOICE LOADING ============
 function loadVoices() {
     const voices = speechSynthesis.getVoices();
     if (voices.length === 0) return;
     
-    // Priority list for best Arabic voices (more natural sounding)
     const voicePriority = [
-        // Google voices (most natural)
         v => v.name === 'Google العربية' || v.name === 'Google Arabic',
         v => v.lang === 'ar-SA' && v.name.includes('Google'),
         v => v.lang === 'ar' && v.name.includes('Google'),
-        // Microsoft voices
         v => v.name === 'Microsoft Hoda' || v.name === 'Microsoft Naayf',
         v => v.lang === 'ar-SA' && v.name.includes('Microsoft'),
-        // Saudi specific
         v => v.lang === 'ar-SA',
-        // Other Arabic
         v => v.lang.startsWith('ar') && v.name.includes('Female'),
         v => v.lang.startsWith('ar') && v.name.includes('Male'),
         v => v.lang.startsWith('ar')
     ];
     
-    // Find best teacher voice (prefer male, deeper)
     for (const check of voicePriority) {
         const found = voices.find(v => check(v) && (!v.name.includes('Female') || v.name.includes('Naayf')));
-        if (found) {
-            teacherVoice = found;
-            break;
-        }
+        if (found) { teacherVoice = found; break; }
     }
     
-    // Find best student voice (prefer female, higher pitch)
     for (const check of voicePriority) {
         const found = voices.find(v => check(v) && (v.name.includes('Female') || v.name.includes('Hoda') || v.name.includes('Zira')));
-        if (found) {
-            studentVoice = found;
-            break;
-        }
+        if (found) { studentVoice = found; break; }
     }
     
-    // Fallback
     if (!teacherVoice) teacherVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
     if (!studentVoice) studentVoice = voices.find(v => v.lang.startsWith('ar')) || voices[0];
     
@@ -1624,8 +1734,13 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = loadVoices;
 }
 
-// ============ IMPROVED SPEECH FUNCTION ============
 function speak(text, isTeacher = true, callback) {
+    if (!soundEnabled) {
+        showSoundAlert('🔊 يرجى تفعيل الصوت أولاً');
+        if (callback) setTimeout(callback, 100);
+        return;
+    }
+    
     if (!('speechSynthesis' in window)) {
         if (callback) setTimeout(callback, 100);
         return;
@@ -1633,7 +1748,6 @@ function speak(text, isTeacher = true, callback) {
     
     speechSynthesis.cancel();
     
-    // Split long text into sentences for more natural pauses
     const sentences = text.split(/(?<=[.!?،۔])\s+/);
     let currentIndex = 0;
     
@@ -1655,18 +1769,16 @@ function speak(text, isTeacher = true, callback) {
         const utter = new SpeechSynthesisUtterance(sentence);
         utter.lang = 'ar-SA';
         
-        // More natural settings
         if (isTeacher) {
-            utter.rate = 0.92;  // Slightly slower for clarity
-            utter.pitch = 0.9;  // Slightly deeper
+            utter.rate = 0.92;
+            utter.pitch = 0.9;
             utter.volume = 1;
         } else {
             utter.rate = 0.95;
-            utter.pitch = 1.1;  // Slightly higher for student
+            utter.pitch = 1.1;
             utter.volume = 1;
         }
         
-        // Use best available voice
         if (isTeacher && teacherVoice) utter.voice = teacherVoice;
         else if (!isTeacher && studentVoice) utter.voice = studentVoice;
         
@@ -1675,7 +1787,6 @@ function speak(text, isTeacher = true, callback) {
         
         utter.onend = () => {
             currentIndex++;
-            // Small pause between sentences for natural flow
             setTimeout(speakNext, 200);
         };
         
@@ -1712,7 +1823,6 @@ function hideSpeakerIndicator() {
     document.getElementById('teacherFigure').classList.remove('teacher-speaking');
 }
 
-// ============ NAVIGATION - FIXED ============
 function toggleMenu() {
     const toggle = document.getElementById('menuToggle');
     const dropdown = document.getElementById('menuDropdown');
@@ -1724,36 +1834,36 @@ function goToSection(sectionId) {
     const index = sections.findIndex(s => s.id === sectionId);
     if (index === -1) return;
     
-    // Close menu
     toggleMenu();
     
     const landing = document.getElementById('landing');
     const classroom = document.getElementById('classroom');
     const questionScreen = document.getElementById('questionScreen');
     
-    // Cancel any ongoing speech
     speechSynthesis.cancel();
     stopAudio();
     
     if (!landing.classList.contains('hidden')) {
-        // Case 1: User is on landing page - open classroom with selected section
         currentSection = index;
         enterStudentView();
     } else if (questionScreen.classList.contains('active')) {
-        // Case 2: User is on question screen - go back to classroom then load section
         questionScreen.classList.remove('active');
         currentSection = index;
         setTimeout(() => {
             loadSection(index);
         }, 400);
     } else if (classroom.classList.contains('active')) {
-        // Case 3: User is already in classroom - just load the new section
         currentSection = index;
         loadSection(index);
     }
 }
 
 function enterStudentView() {
+    if (!soundEnabled) {
+        showSoundAlert('🔊 يرجى تفعيل الصوت أولاً من الزر أعلاه');
+        return;
+    }
+    
     document.getElementById('landing').classList.add('hidden');
     setTimeout(() => {
         document.getElementById('classroom').classList.add('active');
@@ -1765,21 +1875,16 @@ function loadSection(index) {
     currentSection = index;
     const section = sections[index];
     
-    // Update blackboard
     document.getElementById('boardTitle').textContent = section.boardTitle;
     document.getElementById('boardSubtitle').textContent = section.boardSubtitle;
     
-    // Render students
     renderStudents(section);
     
-    // Hide teacher speech initially
     const speech = document.getElementById('teacherSpeech');
     speech.classList.remove('show');
     
-    // Start teacher intro after a short delay
     setTimeout(() => {
         showTeacherQuestion(section.teacherIntro, () => {
-            // After teacher finishes, show student questions
             setTimeout(() => {
                 document.querySelectorAll('.student-question').forEach((q, i) => {
                     setTimeout(() => q.classList.add('show'), i * 250);
@@ -1789,7 +1894,6 @@ function loadSection(index) {
     }, 800);
 }
 
-// ============ DYNAMIC STUDENTS GRID ============
 function renderStudents(section) {
     const grid = document.getElementById('studentsGrid');
     grid.innerHTML = '';
@@ -2002,7 +2106,6 @@ audioEl.addEventListener('ended', () => {
     }, 1000);
 });
 
-// Initialize
 init();
 </script>
 </body>
